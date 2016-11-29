@@ -1,25 +1,17 @@
 import ply.lex as lex
 
 reserved_words = (
-
-    'Program',
-    'Var',
-    'Begin',
-    'End',
-    'Function',
-    'Write',
-    'True',
-    'False'
+    'integer',
+    'real'
 )
 
 tokens = (
-    'NUMBER',
     'ADD_OP',
-    'IDENTIFIER'
+    'MUL_OP',
+    'IDENTIFIER',
 ) + tuple(map(lambda s: s.upper(), reserved_words))
 
-literals = '();={}#'
-
+literals = '();=#'
 
 def t_ADD_OP(t):
     r'[+-]'
@@ -38,19 +30,25 @@ def t_IDENTIFIER(t):
     return t
 
 
+def t_REAL(t):
+    r'\d+\.\d+'
+    return t
+
+
+def t_INTEGER(t):
+    r'\d+'
+    return t
+
+
 def t_newline(t):
-    r'\n+'
+    r'(\n+)'
     t.lexer.lineno += len(t.value)
-
-
-t_ignore = ' \t'
-
 
 def t_error(t):
     print("Illegal character '%s'" % repr(t.value[0]))
     t.lexer.skip(1)
 
-
+t_ignore = ' \t'
 lex.lex()
 
 if __name__ == "__main__":
