@@ -23,6 +23,8 @@ reserved_words = (
     'until',
     'while',
     'do'
+    'write',
+    'writeln'
 )
 
 # LEXEME TYPES definition
@@ -55,6 +57,8 @@ t_PROCEDURE = r"""(?i)procedure"""
 t_FUNCTION = r"""(?i)function"""
 t_BEGIN = r"""(?i)begin"""      # END/START SECTION
 t_END = r"""(?i)end"""
+t_WRITE = r"""(?i)write"""      # MISC
+t_WRITELN = r"""(?i)writeln"""
 literals = '();={}.'
 
 
