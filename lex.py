@@ -49,8 +49,7 @@ def t_newline(t):
 
 # COMMENT : inline  -> Pascal //, multi-line -> Pascal {}
 def t_COMMENT(t):
-    # r"""(?://[^\n]*|/\*(?:(?!\*/).)*\*/)"""
-    r"""\#.*"""
+    r"""{(.|[\r\n])*}"""
     pass
 
 
