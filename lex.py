@@ -13,7 +13,9 @@ reserved_words = (
     'not',
     'begin',
     'end',
-    'program'
+    'program',
+    'write',
+    'writeln'
 )
 
 # LEXEME TYPES definition
