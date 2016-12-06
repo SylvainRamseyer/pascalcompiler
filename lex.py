@@ -10,7 +10,9 @@ reserved_words = (
     'char',
     'and',
     'or',
-    'not'
+    'not',
+    'begin',
+    'end'
 )
 
 # LEXEME TYPES definition
@@ -33,7 +35,7 @@ t_CHAR = r"""['].[']|['][']"""  # CHAR: returns character
 t_AND = r"""(?i)and"""     # LOGICAL OPERATORS
 t_OR = r"""(?i)or"""
 t_NOT = r"""(?i)not"""
-literals = '();={}'
+literals = '();={}.'
 
 
 # IDENTIFIER : variables' name
