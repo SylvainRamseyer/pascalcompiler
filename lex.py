@@ -23,12 +23,8 @@ tokens = (
 
 t_ADD_OP = r'[+-]'  # LEXEMES : + -
 t_MUL_OP = r'[*/]'  # LEXEMES : * /
-"""
-Ces expressions régulières ne supporte pas les notations exponentielles
-et les déclaration de real du genre 4.0f.
-"""
-t_REAL = r'\d+\.\d+'  # NUMBERS : returns number
-t_INTEGER = r'\d+'
+t_INTEGER = r'\d+'  # NUMBERS : returns number
+t_REAL = r'\d+\.\d+'  # FLOATING NUMBERS: numbers like 4.0f are not handled
 t_CHAR = r"""['].[']|['][']"""  # CHAR: returns character
 literals = '();={}.'
 
