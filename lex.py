@@ -3,7 +3,8 @@ import ply.lex as lex
 # RESERVED WORDS
 reserved_words = (
     'integer',
-    'real'
+    'real',
+    'char'
 )
 
 # LEXEME TYPES definition
@@ -46,6 +47,10 @@ def t_REAL(t):
 
 def t_INTEGER(t):
     r"""\d+"""
+    return t
+
+def t_CHAR(t):
+    r"""['].[']|['][']"""
     return t
 
 
