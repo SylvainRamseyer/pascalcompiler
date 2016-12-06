@@ -6,7 +6,8 @@ reserved_words = (
     'real',
     'boolean',
     'true',
-    'false'
+    'false',
+    'char'
 )
 
 # LEXEME TYPES definition
@@ -27,7 +28,7 @@ et les déclaration de real du genre 4.0f.
 """
 t_REAL = r'\d+\.\d+'  # NUMBERS : returns number
 t_INTEGER = r'\d+'
-
+t_CHAR = r"""['].[']|['][']"""  # CHAR: returns character
 literals = '();={}'
 
 
