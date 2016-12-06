@@ -1,5 +1,12 @@
 7 + 3.2
 variable = 12
 variable = variable + 4.6
+
+
 toto = true
 titi = false
+
+True
+TRUE
+
+trueVar = 12
