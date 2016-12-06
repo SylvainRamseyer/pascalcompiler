@@ -7,7 +7,10 @@ reserved_words = (
     'boolean',
     'true',
     'false',
-    'char'
+    'char',
+    'and',
+    'or',
+    'not'
 )
 
 # LEXEME TYPES definition
@@ -18,17 +21,18 @@ tokens = (
     'IDENTIFIER',
 ) + tuple(map(lambda s: s.upper(), reserved_words))
 
-literals = '();='
-
 t_ADD_OP = r'[+-]'  # LEXEMES : + -
 t_MUL_OP = r'[*/]'  # LEXEMES : * /
 """
 Ces expressions régulières ne supporte pas les notations exponentielles
 et les déclaration de real du genre 4.0f.
 """
-t_REAL = r'\d+\.\d+'  # NUMBERS : returns number
+t_REAL = r'\d+\.\d+'            # NUMBERS : returns number
 t_INTEGER = r'\d+'
 t_CHAR = r"""['].[']|['][']"""  # CHAR: returns character
+t_AND = r"""(?i)and"""     # LOGICAL OPERATORS
+t_OR = r"""(?i)or"""
+t_NOT = r"""(?i)not"""
 literals = '();={}'
 
 
