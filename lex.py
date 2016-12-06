@@ -7,7 +7,9 @@ reserved_words = (
     'boolean',
     'true',
     'false',
-    'char'
+    'char',
+    'begin',
+    'end'
 )
 
 # LEXEME TYPES definition
@@ -18,7 +20,6 @@ tokens = (
     'IDENTIFIER',
 ) + tuple(map(lambda s: s.upper(), reserved_words))
 
-literals = '();='
 
 t_ADD_OP = r'[+-]'  # LEXEMES : + -
 t_MUL_OP = r'[*/]'  # LEXEMES : * /
@@ -29,7 +30,7 @@ et les déclaration de real du genre 4.0f.
 t_REAL = r'\d+\.\d+'  # NUMBERS : returns number
 t_INTEGER = r'\d+'
 t_CHAR = r"""['].[']|['][']"""  # CHAR: returns character
-literals = '();={}'
+literals = '();={}.'
 
 
 # IDENTIFIER : variables' name
