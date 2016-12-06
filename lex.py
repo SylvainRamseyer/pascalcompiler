@@ -22,9 +22,11 @@ reserved_words = (
     'repeat',
     'until',
     'while',
-    'do'
+    'do',
     'write',
-    'writeln'
+    'writeln',
+    'const',
+    'var'
 )
 
 # LEXEME TYPES definition
@@ -32,7 +34,7 @@ reserved_words = (
 tokens = (
     'ADD_OP',
     'MUL_OP',
-    'IDENTIFIER',
+    'IDENTIFIER'
 ) + tuple(map(lambda s: s.upper(), reserved_words))
 
 t_ADD_OP = r'[+-]'              # LEXEMES : + -
