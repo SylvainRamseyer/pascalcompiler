@@ -8,6 +8,9 @@ reserved_words = (
     'true',
     'false',
     'char',
+    'and',
+    'or',
+    'not',
     'begin',
     'end'
 )
@@ -20,12 +23,14 @@ tokens = (
     'IDENTIFIER',
 ) + tuple(map(lambda s: s.upper(), reserved_words))
 
-
 t_ADD_OP = r'[+-]'  # LEXEMES : + -
 t_MUL_OP = r'[*/]'  # LEXEMES : * /
 t_INTEGER = r'\d+'  # NUMBERS : returns number
 t_REAL = r'\d+\.\d+'  # FLOATING NUMBERS: numbers like 4.0f are not handled
 t_CHAR = r"""['].[']|['][']"""  # CHAR: returns character
+t_AND = r"""(?i)and"""     # LOGICAL OPERATORS
+t_OR = r"""(?i)or"""
+t_NOT = r"""(?i)not"""
 literals = '();={}.'
 
 
