@@ -2,18 +2,27 @@ import ply.lex as lex
 
 # RESERVED WORDS
 reserved_words = (
-    'integer',
+    'integer',      # variables
     'real',
     'boolean',
-    'true',
-    'false',
     'char',
-    'and',
+    'true',         # boolean
+    'false',
+    'and',          # logical
     'or',
     'not',
+    'program',      # program
     'begin',
     'end',
-    'program',
+    'function',
+    'procedure',
+    'if',           # flow control
+    'then',
+    'else',
+    'repeat',
+    'until',
+    'while',
+    'do'
     'write',
     'writeln'
 )
@@ -26,14 +35,30 @@ tokens = (
     'IDENTIFIER',
 ) + tuple(map(lambda s: s.upper(), reserved_words))
 
-t_ADD_OP = r'[+-]'  # LEXEMES : + -
-t_MUL_OP = r'[*/]'  # LEXEMES : * /
-t_INTEGER = r'\d+'  # NUMBERS : returns number
-t_REAL = r'\d+\.\d+'  # FLOATING NUMBERS: numbers like 4.0f are not handled
+t_ADD_OP = r'[+-]'              # LEXEMES : + -
+t_MUL_OP = r'[*/]'              # LEXEMES : * /
+t_INTEGER = r'\d+'              # INTEGER : returns an integer
+t_REAL = r'\d+\.\d+'            # FLOATING NUMBERS: numbers like 4.0f are not handled
 t_CHAR = r"""['].[']|['][']"""  # CHAR: returns character
-t_AND = r"""(?i)and"""     # LOGICAL OPERATORS
+t_VAR = r"""(?i)var"""
+t_CONST = r"""(?i)const"""
+t_AND = r"""(?i)and"""          # LOGICAL OPERATORS
 t_OR = r"""(?i)or"""
 t_NOT = r"""(?i)not"""
+t_IF = r"""(?i)if"""            # FLOW CONTROL
+t_THEN = r"""(?i)then"""
+t_ELSE = r"""(?i)else"""
+t_REPEAT = r"""(?i)repeat"""
+t_UNTIL = r"""(?i)until"""
+t_WHILE = r"""(?i)while"""
+t_DO = r"""(?i)do"""
+t_PROGRAM = r"""(?i)program"""  # RESERVED WORDS
+t_PROCEDURE = r"""(?i)procedure"""
+t_FUNCTION = r"""(?i)function"""
+t_BEGIN = r"""(?i)begin"""      # END/START SECTION
+t_END = r"""(?i)end"""
+t_WRITE = r"""(?i)write"""      # MISC
+t_WRITELN = r"""(?i)writeln"""
 literals = '();={}.'
 
 
