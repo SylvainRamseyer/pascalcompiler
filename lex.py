@@ -9,7 +9,8 @@ reserved_words = (
     'false',
     'char',
     'begin',
-    'end'
+    'end',
+    'program'
 )
 
 # LEXEME TYPES definition
