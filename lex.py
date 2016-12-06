@@ -1,5 +1,6 @@
 import ply.lex as lex
 
+# RESERVED WORDS
 reserved_words = (
     'integer',
     'real',
@@ -8,6 +9,8 @@ reserved_words = (
     'false'
 )
 
+# LEXEME TYPES definition
+# addition : reserved words into tokens
 tokens = (
     'ADD_OP',
     'MUL_OP',
@@ -16,16 +19,20 @@ tokens = (
 
 literals = '();='
 
-t_ADD_OP = r'[+-]'
-t_MUL_OP = r'[*/]'
+t_ADD_OP = r'[+-]'  # LEXEMES : + -
+t_MUL_OP = r'[*/]'  # LEXEMES : * /
 """
 Ces expressions régulières ne supporte pas les notations exponentielles
 et les déclaration de real du genre 4.0f.
 """
-t_REAL = r'\d+\.\d+'
+t_REAL = r'\d+\.\d+'  # NUMBERS : returns number
 t_INTEGER = r'\d+'
 
+literals = '();={}'
 
+
+# IDENTIFIER : variables' name
+# check : reserved words
 def t_IDENTIFIER(t):
     r'[A-Za-z_]\w*'
     if t.value.lower() in reserved_words:
@@ -33,17 +40,28 @@ def t_IDENTIFIER(t):
     return t
 
 
+# LINE NUMBER : in case of error occurrence
 def t_newline(t):
-    r'(\n+)'
+    r"""(\n+)"""
     t.lexer.lineno += len(t.value)
 
 
+# COMMENT : inline  -> Pascal //, multi-line -> Pascal {}
+def t_COMMENT(t):
+    # r"""(?://[^\n]*|/\*(?:(?!\*/).)*\*/)"""
+    r"""\#.*"""
+    pass
+
+
+# ERROR GENERATOR : in case of unexpected error occurrence
 def t_error(t):
     print("Illegal character '%s'" % repr(t.value[0]))
     t.lexer.skip(1)
 
 
+# IGNORE : spaces + tabs
 t_ignore = ' \t'
+# building lexer
 lex.lex()
 
 if __name__ == "__main__":

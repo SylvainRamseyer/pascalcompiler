@@ -90,3 +90,6 @@ ENV/
 
 # file generate for yacc and ply
 generate/
+
+# pyCharm
+.idea/*
