@@ -1,0 +1,12 @@
+7 + 3.2
+variable = 12
+variable = variable + 4.6
+'x'
+
+toto = true
+titi = false
+
+True
+TRUE
+'c'
+trueVar = 12

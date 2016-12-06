@@ -1,0 +1,2 @@
+{ I am a comment and should not be seen }
+a = 2;
