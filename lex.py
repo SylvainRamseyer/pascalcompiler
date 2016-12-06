@@ -2,7 +2,10 @@ import ply.lex as lex
 
 reserved_words = (
     'integer',
-    'real'
+    'real',
+    'boolean',
+    'true',
+    'false'
 )
 
 tokens = (
@@ -11,32 +14,22 @@ tokens = (
     'IDENTIFIER',
 ) + tuple(map(lambda s: s.upper(), reserved_words))
 
-literals = '();=#'
+literals = '();='
 
-def t_ADD_OP(t):
-    r'[+-]'
-    return t
-
-
-def t_MUL_OP(t):
-    r'[*/]'
-    return t
+t_ADD_OP = r'[+-]'
+t_MUL_OP = r'[*/]'
+"""
+Ces expressions régulières ne supporte pas les notations exponentielles
+et les déclaration de real du genre 4.0f.
+"""
+t_REAL = r'\d+\.\d+'
+t_INTEGER = r'\d+'
 
 
 def t_IDENTIFIER(t):
     r'[A-Za-z_]\w*'
-    if t.value in reserved_words:
+    if t.value.lower() in reserved_words:
         t.type = t.value.upper()
-    return t
-
-
-def t_REAL(t):
-    r'\d+\.\d+'
-    return t
-
-
-def t_INTEGER(t):
-    r'\d+'
     return t
 
 
@@ -44,9 +37,11 @@ def t_newline(t):
     r'(\n+)'
     t.lexer.lineno += len(t.value)
 
+
 def t_error(t):
     print("Illegal character '%s'" % repr(t.value[0]))
     t.lexer.skip(1)
+
 
 t_ignore = ' \t'
 lex.lex()
