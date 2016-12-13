@@ -17,33 +17,32 @@ def p_program(p):
 
 # BLOCK :
 def p_block(p):
-    """ block : variable_declaration_part \
-        statement_part """
+    """ block : statement_part """
     p[0] = p[1]
 
 
 # VARIABLE declaration : VAR variable : variable_type;
-def p_variable_declaration(p):
-    """ variable_declaration : IDENTIFIER ':' BOOLEAN ';' """
-    # TODO
-    raise NotImplementedError
-
-
-# VARIABLE declaration : nested OR no vars
-def p_variable_declaration_part(p):
-    """ variable_declaration_part : VAR variable_declaration_list ';'
-        | """
-    if p[0]:
-        p[0] = p[2]
-
-
-# VARIABLE declaration list : nested variables
-def p_variable_declaration_list(p):
-    """ variable_declaration_list : variable_declaration_list ';' variable_declaration
-        | variable_declaration """
-    p[0] = p[1]
-    # TODO
-    # raise NotImplementedError
+# def p_variable_declaration(p):
+#     """ variable_declaration : IDENTIFIER ':' BOOLEAN ';' """
+#     # TODO
+#     raise NotImplementedError
+#
+#
+# # VARIABLE declaration : nested OR no vars
+# def p_variable_declaration_part(p):
+#     """ variable_declaration_part : VAR variable_declaration_list ';'
+#         | """
+#     if p[0]:
+#         p[0] = p[2]
+#
+#
+# # VARIABLE declaration list : nested variables
+# def p_variable_declaration_list(p):
+#     """ variable_declaration_list : variable_declaration_list ';' variable_declaration
+#         | variable_declaration """
+#     p[0] = p[1]
+#     # TODO
+#     # raise NotImplementedError
 
 
 # STATEMENT : block
