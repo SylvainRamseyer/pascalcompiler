@@ -1,0 +1,5 @@
+Program Hello_World;
+Begin
+	Write('h');
+	{Readln;}
+End.

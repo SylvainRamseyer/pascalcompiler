@@ -6,6 +6,8 @@ reserved_words = (
     'real',
     'boolean',
     'char',
+    'const',
+    'var',
     'true',         # boolean
     'false',
     'and',          # logical
@@ -23,10 +25,8 @@ reserved_words = (
     'until',
     'while',
     'do',
-    'write',
-    'writeln',
-    'const',
-    'var'
+    'write',        # misc
+    'writeln'
 )
 
 # LEXEME TYPES definition
@@ -67,7 +67,7 @@ literals = '();={}.'
 # IDENTIFIER : variables' name
 # check : reserved words
 def t_IDENTIFIER(t):
-    r'[A-Za-z_]\w*'
+    r"""[A-Za-z_]\w*"""
     if t.value.lower() in reserved_words:
         t.type = t.value.upper()
     return t
