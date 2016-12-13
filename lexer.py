@@ -70,6 +70,8 @@ literals = '();={}.:'
 # check : reserved words
 def t_IDENTIFIER(t):
     r"""[A-Za-z_]\w*"""
+    if t.value.lower() in reserved_words:
+        t.type = t.value.upper()
     return t
 
 
