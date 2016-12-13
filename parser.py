@@ -14,9 +14,19 @@ def p_program(p):
 
 
 def p_block(p):
-    ''' block : BEGIN statement END '''
-    p[0] = p[2]
+    ''' block : variable_declaration_part
+        | statement_part '''
+    p[0] = p[1]
 
+def p_variable_declaration_part(p):
+    ''' variable_declaration_part : VAR '''
+    # TODO
+    raise NotImplementedError
+
+
+def p_statement_part(p):
+    ''' statement_part : BEGIN statement END '''
+    p[0] = p[2]
 
 def p_statement(p):
     ''' statement : statement ';' statement
