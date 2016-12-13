@@ -18,15 +18,22 @@ def p_block(p):
         | statement_part '''
     p[0] = p[1]
 
+
 def p_variable_declaration_part(p):
-    ''' variable_declaration_part : VAR '''
-    # TODO
-    raise NotImplementedError
+    ''' variable_declaration_part : VAR variable_declaration '''
+    p[0] = p[2]
+
+
+def p_variable_declaration(p):
+    ''' variable_declaration : variable_declaration ';'  variable_declaration
+        | variable_declaration ';' '''
+    p[0] = p[1]
 
 
 def p_statement_part(p):
     ''' statement_part : BEGIN statement END '''
     p[0] = p[2]
+
 
 def p_statement(p):
     ''' statement : statement ';' statement
