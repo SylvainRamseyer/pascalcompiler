@@ -5,48 +5,19 @@ import AST
 
 vars = {}
 
-def p_programme_statement(p):
-    ''' programme : statement '''
-    p[0] = AST.ProgramNode(p[1])
-
-def p_programme_recursive(p):
-    ''' programme : statement ';' programme '''
-    p[0] = AST.ProgramNode([p[1]]+p[3].children)
-
-def p_statement(p):
-    ''' statement : assignation
-        | structure '''
-    p[0] = p[1]
-
-def p_statement_print(p):
-    ''' statement : PRINT expression '''
-    p[0] = AST.PrintNode(p[2])
-
-def p_structure(p):
-    ''' structure : WHILE expression '{' programme '}' '''
-    p[0] = AST.WhileNode([p[2],p[4]])
-
-def p_expression_op(p):
-    '''expression : expression ADD_OP expression
-            | expression MUL_OP expression'''
-    p[0] = AST.OpNode(p[2], [p[1], p[3]])
-
-def p_expression_num_or_var(p):
-    '''expression : NUMBER
-        | IDENTIFIER '''
-    p[0] = AST.TokenNode(p[1])
-
-def p_expression_paren(p):
-    '''expression : '(' expression ')' '''
-    p[0] = p[2]
-
-def p_minus(p):
-    ''' expression : ADD_OP expression %prec UMINUS'''
-    p[0] = AST.OpNode(p[1], [p[2]])
-
-def p_assign(p):
-    ''' assignation : IDENTIFIER '=' expression '''
-    p[0] = AST.AssignNode([AST.TokenNode(p[1]),p[3]])
+# def p_programme_statement(p):
+#     ''' programme : PROGRAM IDENTIFIER ';' block '.' '''
+#     print(p)
+#     #p[0] = AST.ProgramNode(p[1])
+#
+# def p_block(p):
+#     ''' block : BEGIN statement END '''
+#     p[0] = AST.ProgramNode(p[1])
+#
+# def p_statement(p):
+#     ''' statement : assignation
+#         | structure '''
+#     p[0] = p[1]
 
 def p_error(p):
     if p:
