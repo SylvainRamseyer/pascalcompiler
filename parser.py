@@ -5,20 +5,6 @@ from lex import tokens
 # variable dictionary
 vars = {}
 
-# def p_programme_statement(p):
-#     ''' programme : PROGRAM IDENTIFIER ';' block '.' '''
-#     print(p)
-#     #p[0] = AST.ProgramNode(p[1])
-#
-# def p_block(p):
-#     ''' block : BEGIN statement END '''
-#     p[0] = AST.ProgramNode(p[1])
-#
-# def p_statement(p):
-#     ''' statement : assignation
-#         | structure '''
-#     p[0] = p[1]
-
 # ERROR MANAGEMENT
 def p_error(p):
     if p:
