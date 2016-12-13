@@ -29,6 +29,11 @@ def p_statement_int(p):
     p[0] = p[1]
 
 
+def p_statement_real(p):
+    ''' statement : REAL '''
+    p[0] = p[1]
+
+
 def p_error(p):
     print("Syntax error in line %d" % p.lineno)
     parser.errok()
