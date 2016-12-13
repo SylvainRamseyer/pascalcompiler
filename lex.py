@@ -6,6 +6,8 @@ reserved_words = (
     'real',
     'boolean',
     'char',
+    'const',
+    'var',
     'true',         # boolean
     'false',
     'and',          # logical
@@ -22,8 +24,8 @@ reserved_words = (
     'repeat',
     'until',
     'while',
-    'do'
-    'write',
+    'do',
+    'write',        # misc
     'writeln'
 )
 
@@ -32,7 +34,7 @@ reserved_words = (
 tokens = (
     'ADD_OP',
     'MUL_OP',
-    'IDENTIFIER',
+    'IDENTIFIER'
 ) + tuple(map(lambda s: s.upper(), reserved_words))
 
 t_ADD_OP = r'[+-]'              # LEXEMES : + -
@@ -65,7 +67,7 @@ literals = '();={}.'
 # IDENTIFIER : variables' name
 # check : reserved words
 def t_IDENTIFIER(t):
-    r'[A-Za-z_]\w*'
+    r"""[A-Za-z_]\w*"""
     if t.value.lower() in reserved_words:
         t.type = t.value.upper()
     return t
@@ -99,7 +101,17 @@ if __name__ == "__main__":
     prog = open(sys.argv[1]).read()
 
     lex.input(prog)
-
+    print('''\
+   ___          _                 ___                    _     __
+  / __\__ _ ___| |_ ___  _ __    / _ \__ _ ___  ___ __ _| |   / /  _____  \
+_____ _ __
+ / /  / _` / __| __/ _ \| '__|  / /_)/ _` / __|/ __/ _` | |  / /  / _ \ \/ \
+/ _ \ '__|
+/ /__| (_| \__ \ || (_) | |    / ___/ (_| \__ \ (_| (_| | | / /__|  __/>  \
+<  __/ |
+\____/\__,_|___/\__\___/|_|    \/    \__,_|___/\___\__,_|_| \____/\___/_/\
+\_\___|_|
+''')
     while 1:
         tok = lex.token()
         if not tok:
