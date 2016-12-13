@@ -1,6 +1,5 @@
 {PROGRAM}
 PROGRAM my_program;
-
 begin
     27;
     45;
