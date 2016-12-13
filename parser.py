@@ -9,13 +9,24 @@ def p_file(p):
 
 
 def p_program(p):
-    ''' program : program_heading ';' block '.' '''
+    ''' program : PROGRAM IDENTIFIER  ';' block '.' '''
+    p[0] = p[3]
+
+
+def p_block(p):
+    ''' block : BEGIN statement END '''
+    p[0] = p[2]
+
+
+def p_statement(p):
+    ''' statement : statement ';' statement
+        | statement ';' '''
     p[0] = p[1]
 
 
-def p_program_heading(p):
-    ''' program_heading : PROGRAM IDENTIFIER ';' '''
-    p[0] = p[2]
+def p_statement_int(p):
+    ''' statement : INTEGER '''
+    p[0] = p[1]
 
 
 def p_error(p):
