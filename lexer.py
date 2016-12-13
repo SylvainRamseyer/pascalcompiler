@@ -1,3 +1,4 @@
+"""Pascal lexical analyzer."""
 import ply.lex as lex
 
 # RESERVED WORDS
@@ -40,7 +41,8 @@ tokens = (
 t_ADD_OP = r'[+-]'              # LEXEMES : + -
 t_MUL_OP = r'[*/]'              # LEXEMES : * /
 t_INTEGER = r'\d+'              # INTEGER : returns an integer
-t_REAL = r'\d+\.\d+'            # FLOATING NUMBERS: numbers like 4.0f are not handled
+'''FLOATING NUMBERS: numbers like 4.0f are not handled '''
+t_REAL = r'\d+\.\d+'
 t_CHAR = r"""['].[']|['][']"""  # CHAR: returns character
 t_VAR = r"""(?i)var"""
 t_CONST = r"""(?i)const"""
@@ -61,15 +63,13 @@ t_BEGIN = r"""(?i)begin"""      # END/START SECTION
 t_END = r"""(?i)end"""
 t_WRITE = r"""(?i)write"""      # MISC
 t_WRITELN = r"""(?i)writeln"""
-literals = '();={}.'
+literals = '();={}.:'
 
 
 # IDENTIFIER : variables' name
 # check : reserved words
 def t_IDENTIFIER(t):
     r"""[A-Za-z_]\w*"""
-    if t.value.lower() in reserved_words:
-        t.type = t.value.upper()
     return t
 
 
