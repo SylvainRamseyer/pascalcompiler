@@ -34,15 +34,15 @@ def p_block(p):
 
 
 # EXPRESSION : arithmetic operators
-def p_expression_op(p):
-    """ expression : statement ADD_OP statement
+def p_statement_op(p):
+    """ statement : statement ADD_OP statement
         | statement MUL_OP statement """
-    p[0] = operations[p[2]](p[1], p[3])
+    p[0] = operations[p[2]](int(p[1]), int(p[3]))
 
 
 def p_minus(p):
     """ statement : ADD_OP statement %prec UMINUS """
-    p[0] = operations[p[1]](0, p[2])
+    p[0] = operations[p[1]](0, int(p[2]))
 
 
 # ASSIGNATION : toto = expression
@@ -51,6 +51,7 @@ def p_assign(p):
     # (dictionary) : id(key), expression(value)
     variables[p[1]] = p[3]
     p[0] = p[3]
+
 
 # VARIABLE declaration : VAR variable : variable_type;
 # def p_variable_declaration(p):
