@@ -1,5 +1,7 @@
 Program Hello_World;
 Begin
 	Write('h');
-	Readln;
+	Write(12.0);
+	Write(24);
+	{Readln;}
 End.

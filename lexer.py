@@ -26,7 +26,7 @@ reserved_words = (
     # 'until',
     # 'while',
     # 'do',
-    # 'write',        # misc
+    'write',        # misc
     # 'writeln'
 )
 
@@ -46,7 +46,7 @@ t_MUL_OP = r'[*/]'              # LEXEMES : * /
 t_INTEGER_VALUE = r'\d+'              # INTEGER : returns an integer
 '''FLOATING NUMBERS: numbers like 4.0f are not handled '''
 t_REAL_VALUE = r'\d+\.\d+'
-# t_CHAR_VALUE = r"""['].[']|['][']"""  # CHAR: returns character
+t_CHAR_VALUE = r"""['].[']|['][']"""  # CHAR: returns character
 # t_VAR = r"""(?i)var"""
 # t_CONST = r"""(?i)const"""
 # t_AND = r"""(?i)and"""          # LOGICAL OPERATORS
@@ -64,7 +64,7 @@ t_PROGRAM = r"""(?i)program"""  # RESERVED WORDS
 # t_FUNCTION = r"""(?i)function"""
 t_BEGIN = r"""(?i)begin"""      # END/START SECTION
 t_END = r"""(?i)end"""
-# t_WRITE = r"""(?i)write"""      # MISC
+t_WRITE = r"""(?i)write"""      # MISC
 # t_WRITELN = r"""(?i)writeln"""
 literals = '();={}.:'
 

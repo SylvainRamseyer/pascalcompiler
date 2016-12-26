@@ -112,6 +112,16 @@ def p_statement_real(p):
     p[0] = p[1]
 
 
+def p_statement_char(p):
+    """  statement : CHAR_VALUE """
+    p[0] = p[1]
+
+
+def p_write(p):
+    """ statement : WRITE '(' statement ')' """
+    p[0] = p[2]
+
+
 # ERROR check
 def p_error(p):
     print("Syntax error in line %d" % p.lineno)
