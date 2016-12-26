@@ -33,10 +33,22 @@ def p_block(p):
     p[0] = p[1]
 
 
+def p_var_declaration(p):
+    """ statement : VAR IDENTIFIER ':' type """
+    variables[p[2]] = ""
+    p[0] = p[1]
+
+
+def p_type(p):
+    """ type : INTEGER
+        | REAL """
+    p[0] = p[1]
+
+
 # EXPRESSION : arithmetic operators
 def p_statement_int_op(p):
-    """ statement : INTEGER ADD_OP INTEGER
-        | INTEGER MUL_OP INTEGER """
+    """ statement : INTEGER_VALUE ADD_OP INTEGER_VALUE
+        | INTEGER_VALUE MUL_OP INTEGER_VALUE """
     p[0] = operations[p[2]](int(p[1]), int(p[3]))
     print("P 0 : ", p[0])
     print("P 1 : ", p[1])
@@ -45,8 +57,8 @@ def p_statement_int_op(p):
 
 
 def p_statement_float_op(p):
-    """ statement : REAL ADD_OP REAL
-        | REAL MUL_OP REAL """
+    """ statement : REAL_VALUE ADD_OP REAL_VALUE
+        | REAL_VALUE MUL_OP REAL_VALUE """
     p[0] = operations[p[2]](float(p[1]), float(p[3]))
     print("P 0 : ", p[0])
     print("P 1 : ", p[1])
@@ -59,36 +71,20 @@ def p_minus(p):
     p[0] = operations[p[1]](0, int(p[2]))
 
 
+def p_assignation(p):
+    """ statement : assignation """
+    p[0] = p[1]
+
+
 # ASSIGNATION : toto = expression
 def p_assign(p):
     """ assignation : IDENTIFIER '=' statement """
     # (dictionary) : id(key), expression(value)
+    if variables.get(p[1], None) is None:
+        exit('Unknown variable "%s" at line %d.' % (p[1], p.lineno(1)))
     variables[p[1]] = p[3]
+    print(p[1], "contains", p[3])
     p[0] = p[3]
-
-
-# VARIABLE declaration : VAR variable : variable_type;
-# def p_variable_declaration(p):
-#     """ variable_declaration : IDENTIFIER ':' BOOLEAN ';' """
-#     # TODO
-#     raise NotImplementedError
-#
-#
-# # VARIABLE declaration : nested OR no vars
-# def p_variable_declaration_part(p):
-#     """ variable_declaration_part : VAR variable_declaration_list ';'
-#         | """
-#     if p[0]:
-#         p[0] = p[2]
-#
-#
-# # VARIABLE declaration list : nested variables
-# def p_variable_declaration_list(p):
-#     """ variable_declaration_list : variable_declaration_list ';' variable_declaration
-#         | variable_declaration """
-#     p[0] = p[1]
-#     # TODO
-#     # raise NotImplementedError
 
 
 # STATEMENT : block
@@ -106,13 +102,13 @@ def p_statement(p):
 
 # STATEMENT : variable type : INT
 def p_statement_int(p):
-    """ statement : INTEGER """
+    """ statement : INTEGER_VALUE """
     p[0] = p[1]
 
 
 # STATEMENT : variable type : REAL
 def p_statement_real(p):
-    """ statement : REAL """
+    """ statement : REAL_VALUE """
     p[0] = p[1]
 
 
@@ -136,3 +132,5 @@ if __name__ == "__main__":
     prog = open(sys.argv[1]).read()
     result = yacc.parse(prog, debug=1)
     print(result)
+    print("Here are your variables")
+    print(variables)

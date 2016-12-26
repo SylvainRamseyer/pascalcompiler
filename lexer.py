@@ -7,27 +7,27 @@ reserved_words = (
     'real',
     'boolean',
     'char',
-    'const',
+    # 'const',
     'var',
     'true',         # boolean
     'false',
-    'and',          # logical
-    'or',
-    'not',
+    # 'and',          # logical
+    # 'or',
+    # 'not',
     'program',      # program
     'begin',
     'end',
-    'function',
-    'procedure',
-    'if',           # flow control
-    'then',
-    'else',
-    'repeat',
-    'until',
-    'while',
-    'do',
-    'write',        # misc
-    'writeln'
+    # 'function',
+    # 'procedure',
+    # 'if',           # flow control
+    # 'then',
+    # 'else',
+    # 'repeat',
+    # 'until',
+    # 'while',
+    # 'do',
+    # 'write',        # misc
+    # 'writeln'
 )
 
 # LEXEME TYPES definition
@@ -35,34 +35,37 @@ reserved_words = (
 tokens = (
     'ADD_OP',
     'MUL_OP',
-    'IDENTIFIER'
+    'IDENTIFIER',
+    'INTEGER_VALUE',
+    'REAL_VALUE',
+    'CHAR_VALUE',
 ) + tuple(map(lambda s: s.upper(), reserved_words))
 
 t_ADD_OP = r'[+-]'              # LEXEMES : + -
 t_MUL_OP = r'[*/]'              # LEXEMES : * /
-t_INTEGER = r'\d+'              # INTEGER : returns an integer
+t_INTEGER_VALUE = r'\d+'              # INTEGER : returns an integer
 '''FLOATING NUMBERS: numbers like 4.0f are not handled '''
-t_REAL = r'\d+\.\d+'
-t_CHAR = r"""['].[']|['][']"""  # CHAR: returns character
-t_VAR = r"""(?i)var"""
-t_CONST = r"""(?i)const"""
-t_AND = r"""(?i)and"""          # LOGICAL OPERATORS
-t_OR = r"""(?i)or"""
-t_NOT = r"""(?i)not"""
-t_IF = r"""(?i)if"""            # FLOW CONTROL
-t_THEN = r"""(?i)then"""
-t_ELSE = r"""(?i)else"""
-t_REPEAT = r"""(?i)repeat"""
-t_UNTIL = r"""(?i)until"""
-t_WHILE = r"""(?i)while"""
-t_DO = r"""(?i)do"""
+t_REAL_VALUE = r'\d+\.\d+'
+# t_CHAR_VALUE = r"""['].[']|['][']"""  # CHAR: returns character
+# t_VAR = r"""(?i)var"""
+# t_CONST = r"""(?i)const"""
+# t_AND = r"""(?i)and"""          # LOGICAL OPERATORS
+# t_OR = r"""(?i)or"""
+# t_NOT = r"""(?i)not"""
+# t_IF = r"""(?i)if"""            # FLOW CONTROL
+# t_THEN = r"""(?i)then"""
+# t_ELSE = r"""(?i)else"""
+# t_REPEAT = r"""(?i)repeat"""
+# t_UNTIL = r"""(?i)until"""
+# t_WHILE = r"""(?i)while"""
+# t_DO = r"""(?i)do"""
 t_PROGRAM = r"""(?i)program"""  # RESERVED WORDS
-t_PROCEDURE = r"""(?i)procedure"""
-t_FUNCTION = r"""(?i)function"""
+# t_PROCEDURE = r"""(?i)procedure"""
+# t_FUNCTION = r"""(?i)function"""
 t_BEGIN = r"""(?i)begin"""      # END/START SECTION
 t_END = r"""(?i)end"""
-t_WRITE = r"""(?i)write"""      # MISC
-t_WRITELN = r"""(?i)writeln"""
+# t_WRITE = r"""(?i)write"""      # MISC
+# t_WRITELN = r"""(?i)writeln"""
 literals = '();={}.:'
 
 
