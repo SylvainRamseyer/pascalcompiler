@@ -34,10 +34,24 @@ def p_block(p):
 
 
 # EXPRESSION : arithmetic operators
-def p_statement_op(p):
-    """ statement : statement ADD_OP statement
-        | statement MUL_OP statement """
+def p_statement_int_op(p):
+    """ statement : INTEGER ADD_OP INTEGER
+        | INTEGER MUL_OP INTEGER """
     p[0] = operations[p[2]](int(p[1]), int(p[3]))
+    print("P 0 : ", p[0])
+    print("P 1 : ", p[1])
+    print("P 2 : ", p[2])
+    print("P 3 : ", p[3])
+
+
+def p_statement_float_op(p):
+    """ statement : REAL ADD_OP REAL
+        | REAL MUL_OP REAL """
+    p[0] = operations[p[2]](float(p[1]), float(p[3]))
+    print("P 0 : ", p[0])
+    print("P 1 : ", p[1])
+    print("P 2 : ", p[2])
+    print("P 3 : ", p[3])
 
 
 def p_minus(p):
