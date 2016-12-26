@@ -1,3 +1,3 @@
 import AST
-from AST import addToClass
+from AST import add_to_class
 from functools import reduce

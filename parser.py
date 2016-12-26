@@ -1,6 +1,18 @@
 import ply.yacc as yacc
-
+import AST
 from lexer import tokens
+
+# OPERATIONS : dictionary
+operations = {
+    '+': lambda x, y: x + y,
+    '-': lambda x, y: x - y,
+    '*': lambda x, y: x * y,
+    '/': lambda x, y: x / y
+}
+
+
+# dictionary
+variables = {}
 
 
 # FILE : program entry
@@ -20,6 +32,25 @@ def p_block(p):
     """ block : statement_part """
     p[0] = p[1]
 
+
+# EXPRESSION : arithmetic operators
+def p_expression_op(p):
+    """ expression : statement ADD_OP statement
+        | statement MUL_OP statement """
+    p[0] = operations[p[2]](p[1], p[3])
+
+
+def p_minus(p):
+    """ statement : ADD_OP statement %prec UMINUS """
+    p[0] = operations[p[1]](0, p[2])
+
+
+# ASSIGNATION : toto = expression
+def p_assign(p):
+    """ assignation : IDENTIFIER '=' statement """
+    # (dictionary) : id(key), expression(value)
+    variables[p[1]] = p[3]
+    p[0] = p[3]
 
 # VARIABLE declaration : VAR variable : variable_type;
 # def p_variable_declaration(p):
@@ -75,6 +106,13 @@ def p_error(p):
     print("Syntax error in line %d" % p.lineno)
     parser.errok()
 
+
+# LEXEMES : priority rules
+precedence = (
+    ('left', 'ADD_OP'),
+    ('left', 'MUL_OP'),
+    ('right', 'UMINUS'),
+)
 
 parser = yacc.yacc(outputdir='generated')
 
