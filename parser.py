@@ -25,7 +25,8 @@ def p_file(p):
 
 # PROGRAM declaration : PROGRAM program_name;
 def p_program(p):
-    """ program : PROGRAM IDENTIFIER  ';' var_declaration_block block '.' """
+    """ program : PROGRAM IDENTIFIER  ';' var_declaration_block block '.'
+    | PROGRAM IDENTIFIER  ';' block '.' """
     # p[0] = AST.ProgramNode(p[4], p[1])
     p[0] = p[4]
 
