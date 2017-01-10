@@ -1,0 +1,9 @@
+{PROGRAM}
+PROGRAM my_program;
+begin
+
+    3 and 2;
+    5 or 6;
+    2 + 3;
+
+END.

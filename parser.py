@@ -7,7 +7,9 @@ operations = {
     '+': lambda x, y: x + y,
     '-': lambda x, y: x - y,
     '*': lambda x, y: x * y,
-    '/': lambda x, y: x / y
+    '/': lambda x, y: x / y,
+    'and': lambda x, y: x and y,
+    'or': lambda x, y: x or y,
 }
 
 # dictionary
@@ -27,7 +29,6 @@ def p_program(p):
     p[0] = AST.ProgramNode(p[2], [p[4], p[5]])
 
 
-
 # BLOCK :
 def p_block(p):
     """ block : statement_part """
@@ -35,16 +36,15 @@ def p_block(p):
 
 
 def p_var_decl_block(p):
-    """ var_declaration_block : VAR var_decl_list ';'
+    """ var_declaration_block : VAR var_decl_list
     | """
     p[0] = AST.VarDeclBlockNode(p[2])
 
 
 def p_var_decl_list(p):
     """ var_decl_list : var_declaration ';' var_decl_list
-    | var_declaration """
+    | var_declaration ';' """
     p[0] = AST.VarDeclListNode(p[1])
-
 
 def p_var_declaration(p):
     """ var_declaration : IDENTIFIER ':' type """
@@ -56,8 +56,7 @@ def p_type(p):
     """ type : INTEGER
         | BOOLEAN
         | REAL """
-    #p[0] = AST.TypeNode(AST.TokenNode(p[1]))
-    p[0] = AST.TypeNode(p[1])
+    p[0] = AST.TypeNode(AST.TokenNode(p[1]))
 
 # EXPRESSION : arithmetic operators
 def p_statement_int_op(p):
@@ -90,7 +89,26 @@ def p_assignation(p):
     p[0] = p[1]
 
 
-# ASSIGNATION : toto := expression
+# EXPRESSION : logical operators
+def p_statement_and(p):
+    """ statement : INTEGER_VALUE AND INTEGER_VALUE """
+    p[0] = operations[p[2]](p[1], p[3])
+    print("P 0 : ", p[0])
+    print("P 1 : ", p[1])
+    print("P 2 : ", p[2])
+    print("P 3 : ", p[3])
+
+
+def p_statement_or(p):
+    """ statement : INTEGER_VALUE OR INTEGER_VALUE """
+    p[0] = operations[p[2]](p[1], p[3])
+    print("P 0 : ", p[0])
+    print("P 1 : ", p[1])
+    print("P 2 : ", p[2])
+    print("P 3 : ", p[3])
+
+
+# ASSIGNATION : toto = expression
 def p_assign(p):
     """ assignation : IDENTIFIER ':' '=' statement """
     # (dictionary) : id(key), expression(value)
@@ -126,6 +144,7 @@ def p_statement_real(p):
     p[0] = p[1]
 
 
+# STATEMENT : variable type : CHAR
 def p_statement_char(p):
     """  statement : CHAR_VALUE """
     p[0] = p[1]
@@ -147,6 +166,8 @@ precedence = (
     ('left', 'ADD_OP'),
     ('left', 'MUL_OP'),
     ('right', 'UMINUS'),
+    ('left', 'AND_OP'),
+    ('left', 'OR_OP')
 )
 
 parser = yacc.yacc(outputdir='generated')
