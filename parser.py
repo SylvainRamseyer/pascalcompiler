@@ -12,7 +12,6 @@ operations = {
     'or': lambda x, y: x or y,
 }
 
-
 # dictionary
 variables = {}
 
@@ -20,13 +19,15 @@ variables = {}
 # FILE : program entry
 def p_file(p):
     """ file : program """
+    # p[0] = AST.FileNode(p[1])
     p[0] = p[1]
 
 
 # PROGRAM declaration : PROGRAM program_name;
 def p_program(p):
-    """ program : PROGRAM IDENTIFIER  ';' block '.' """
-    p[0] = p[3]
+    """ program : PROGRAM IDENTIFIER  ';' var_declaration_block block '.' """
+    # p[0] = AST.ProgramNode(p[4], p[1])
+    p[0] = p[4]
 
 
 # BLOCK :
@@ -35,9 +36,21 @@ def p_block(p):
     p[0] = p[1]
 
 
+def p_var_decl_block(p):
+    """ var_declaration_block : VAR var_decl_list ';'
+    | """
+    p[0] = p[2]
+
+
+def p_var_decl_list(p):
+    """ var_decl_list : var_declaration ';' var_declaration
+    | var_declaration """
+    p[0] = p[1]
+
+
 def p_var_declaration(p):
-    """ statement : VAR IDENTIFIER ':' type """
-    variables[p[2]] = ""
+    """ var_declaration : IDENTIFIER ':' type """
+    variables[p[1]] = ""
     p[0] = p[1]
 
 
@@ -99,13 +112,13 @@ def p_statement_or(p):
 
 # ASSIGNATION : toto = expression
 def p_assign(p):
-    """ assignation : IDENTIFIER '=' statement """
+    """ assignation : IDENTIFIER ':' '=' statement """
     # (dictionary) : id(key), expression(value)
     if variables.get(p[1], None) is None:
         exit('Unknown variable "%s" at line %d.' % (p[1], p.lineno(1)))
-    variables[p[1]] = p[3]
-    print(p[1], "contains", p[3])
-    p[0] = p[3]
+    variables[p[1]] = p[4]
+    print(p[1], "contains", p[4])
+    p[0] = p[4]
 
 
 # STATEMENT : block
