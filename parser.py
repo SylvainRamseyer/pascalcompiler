@@ -76,15 +76,15 @@ def p_assignation(p):
     p[0] = p[1]
 
 
-# ASSIGNATION : toto = expression
+# ASSIGNATION : toto := expression
 def p_assign(p):
-    """ assignation : IDENTIFIER '=' statement """
+    """ assignation : IDENTIFIER ':' '=' statement """
     # (dictionary) : id(key), expression(value)
     if variables.get(p[1], None) is None:
         exit('Unknown variable "%s" at line %d.' % (p[1], p.lineno(1)))
-    variables[p[1]] = p[3]
-    print(p[1], "contains", p[3])
-    p[0] = p[3]
+    variables[p[1]] = p[4]
+    print(p[1], "contains", p[4])
+    p[0] = p[4]
 
 
 # STATEMENT : block

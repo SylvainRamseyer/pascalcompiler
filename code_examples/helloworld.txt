@@ -1,5 +1,7 @@
 Program Hello_World;
 Begin
+  var toto : integer;
+  toto := 12;
 	Write('h');
 	Write(12.0);
 	Write(24);
