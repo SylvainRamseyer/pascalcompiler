@@ -17,15 +17,15 @@ variables = {}
 # FILE : program entry
 def p_file(p):
     """ file : program """
-    # p[0] = AST.FileNode(p[1])
-    p[0] = p[1]
+    p[0] = AST.FileNode(p[1])
+    #p[0] = p[1]
 
 
 # PROGRAM declaration : PROGRAM program_name;
 def p_program(p):
     """ program : PROGRAM IDENTIFIER  ';' var_declaration_block block '.' """
-    # p[0] = AST.ProgramNode(p[4], p[1])
-    p[0] = p[4]
+    p[0] = AST.ProgramNode(p[2], [p[4], p[5]])
+
 
 
 # BLOCK :
@@ -37,26 +37,27 @@ def p_block(p):
 def p_var_decl_block(p):
     """ var_declaration_block : VAR var_decl_list ';'
     | """
-    p[0] = p[2]
+    p[0] = AST.VarDeclBlockNode(p[2])
 
 
 def p_var_decl_list(p):
-    """ var_decl_list : var_declaration ';' var_declaration
+    """ var_decl_list : var_declaration ';' var_decl_list
     | var_declaration """
-    p[0] = p[1]
+    p[0] = AST.VarDeclListNode(p[1])
 
 
 def p_var_declaration(p):
     """ var_declaration : IDENTIFIER ':' type """
     variables[p[1]] = ""
-    p[0] = p[1]
+    p[0] = AST.VarDeclarationNode([AST.TokenNode(p[1]), p[3]])
 
 
 def p_type(p):
     """ type : INTEGER
+        | BOOLEAN
         | REAL """
-    p[0] = p[1]
-
+    #p[0] = AST.TypeNode(AST.TokenNode(p[1]))
+    p[0] = AST.TypeNode(p[1])
 
 # EXPRESSION : arithmetic operators
 def p_statement_int_op(p):
