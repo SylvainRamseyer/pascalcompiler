@@ -10,7 +10,6 @@ operations = {
     '/': lambda x, y: x / y
 }
 
-
 # dictionary
 variables = {}
 
@@ -18,23 +17,23 @@ variables = {}
 # FILE : program entry
 def p_file(p):
     """ file : program """
-    p[0] = p[1]
+    p[0] = AST.FileNode(P[1])
 
 
 # PROGRAM declaration : PROGRAM program_name;
 def p_program(p):
     """ program : PROGRAM IDENTIFIER  ';' block '.' """
-    p[0] = p[3]
-
+    p[0] = AST.ProgramNode(p[3],p[1])
 
 # BLOCK :
 def p_block(p):
-    """ block : statement_part """
+    """ block : VAR declaration_part statement_part """
     p[0] = p[1]
 
+def p_declaration_part
 
 def p_var_declaration(p):
-    """ statement : VAR IDENTIFIER ':' type """
+    """ statement : IDENTIFIER ':' type """
     variables[p[2]] = ""
     p[0] = p[1]
 

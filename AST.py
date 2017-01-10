@@ -123,10 +123,19 @@ class Node:
     NODE TYPES
 """
 
+class FileNode(Node):
+    type = 'File'
+
 
 # PROGRAM
 class ProgramNode(Node):
     type = 'Program'
+    def __init__(self,program_indentifier):
+        Node.__init__(self)
+        self.program_indentifier = program_indentifier
+
+    def __repr__(self):
+        return repr(self.program_indentifier)
 
 
 # TOKEN
