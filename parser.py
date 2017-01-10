@@ -35,14 +35,14 @@ def p_block(p):
 
 
 def p_var_decl_block(p):
-    """ var_declaration_block : VAR var_decl_list ';'
+    """ var_declaration_block : VAR var_decl_list
     | """
     p[0] = p[2]
 
 
 def p_var_decl_list(p):
-    """ var_decl_list : var_declaration ';' var_declaration
-    | var_declaration """
+    """ var_decl_list : var_declaration ';' var_decl_list
+    | var_declaration ';' """
     p[0] = p[1]
 
 
@@ -54,7 +54,8 @@ def p_var_declaration(p):
 
 def p_type(p):
     """ type : INTEGER
-        | REAL """
+        | REAL
+        | BOOLEAN """
     p[0] = p[1]
 
 
