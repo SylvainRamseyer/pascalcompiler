@@ -25,8 +25,12 @@ def p_file(p):
 
 # PROGRAM declaration : PROGRAM program_name;
 def p_program(p):
-    """ program : PROGRAM IDENTIFIER  ';' var_declaration_block block '.' """
-    p[0] = AST.ProgramNode(p[2], [p[4], p[5]])
+    """ program : PROGRAM IDENTIFIER  ';' var_declaration_block block '.'
+    | PROGRAM IDENTIFIER  ';' block '.' """
+    if len(p) > 4:
+        p[0] = AST.ProgramNode(p[2], [p[4], p[5]])
+    else:
+        p[0] = AST.ProgramNode(p[2], p[4])
 
 
 # BLOCK :
@@ -49,6 +53,7 @@ def p_var_decl_list(p):
     else:
         p[0] = AST.VarDeclarationNode(p[1])
 
+
 def p_var_declaration(p):
     """ var_declaration : IDENTIFIER ':' type """
     variables[p[1]] = ""
@@ -60,6 +65,7 @@ def p_type(p):
         | BOOLEAN
         | REAL """
     p[0] = AST.TypeNode(AST.TokenNode(p[1]))
+
 
 # EXPRESSION : arithmetic operators
 def p_statement_int_op(p):
