@@ -13,7 +13,7 @@ reserved_words = (
     'false',
     'and',          # logical
     'or',
-    'not',
+    # 'not',
     'program',      # program
     'begin',
     'end',
