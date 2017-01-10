@@ -17,20 +17,22 @@ variables = {}
 # FILE : program entry
 def p_file(p):
     """ file : program """
-    p[0] = AST.FileNode(P[1])
+    # p[0] = AST.FileNode(p[1])
+    p[0] = p[1]
 
 
 # PROGRAM declaration : PROGRAM program_name;
 def p_program(p):
     """ program : PROGRAM IDENTIFIER  ';' var_declaration_block block '.' """
-    p[0] = AST.ProgramNode(p[4],p[1])
+    # p[0] = AST.ProgramNode(p[4], p[1])
+    p[0] = p[4]
+
 
 # BLOCK :
 def p_block(p):
-    """ block : VAR declaration_part statement_part """
+    """ block : statement_part """
     p[0] = p[1]
 
-def p_declaration_part
 
 def p_var_decl_block(p):
     """ var_declaration_block : VAR var_decl_list ';'
