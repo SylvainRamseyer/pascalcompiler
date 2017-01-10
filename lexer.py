@@ -11,8 +11,8 @@ reserved_words = (
     'var',
     'true',         # boolean
     'false',
-    # 'and',          # logical
-    # 'or',
+    'and',          # logical
+    'or',
     # 'not',
     'program',      # program
     'begin',
@@ -33,10 +33,12 @@ reserved_words = (
 # LEXEME TYPES definition
 # addition : reserved words into tokens
 tokens = (
-    'ADD_OP',
+    'ADD_OP',           # arithmetic op
     'MUL_OP',
-    'IDENTIFIER',
-    'INTEGER_VALUE',
+    'AND_OP',           # logical op
+    'OR_OP',
+    'IDENTIFIER',       # identifier
+    'INTEGER_VALUE',    # types
     'REAL_VALUE',
     'CHAR_VALUE',
 ) + tuple(map(lambda s: s.upper(), reserved_words))
@@ -47,11 +49,12 @@ t_INTEGER_VALUE = r'\d+'              # INTEGER : returns an integer
 '''FLOATING NUMBERS: numbers like 4.0f are not handled '''
 t_REAL_VALUE = r'\d+\.\d+'
 t_CHAR_VALUE = r"""['].[']|['][']"""  # CHAR: returns character
+# t_BOOL_VALUE = r"""^(?i)(true|false)$"""
 # t_VAR = r"""(?i)var"""
 # t_CONST = r"""(?i)const"""
-# t_AND = r"""(?i)and"""          # LOGICAL OPERATORS
-# t_OR = r"""(?i)or"""
-# t_NOT = r"""(?i)not"""
+t_AND_OP = r"""(?i)and"""          # LOGICAL OPERATORS
+t_OR_OP = r"""(?i)or"""
+# t_NOT_OP = r"""(?i)not"""
 # t_IF = r"""(?i)if"""            # FLOW CONTROL
 # t_THEN = r"""(?i)then"""
 # t_ELSE = r"""(?i)else"""
