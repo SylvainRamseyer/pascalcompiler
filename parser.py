@@ -85,7 +85,7 @@ def p_statement_int_op(p):
 def p_statement_float_op(p):
     """ statement : REAL_VALUE ADD_OP REAL_VALUE
         | REAL_VALUE MUL_OP REAL_VALUE """
-    p[0] = AST.OpNode(p[2], [p[1], p[3]])
+    p[0] = AST.OpNode(p[2], [AST.TokenNode(p[1]), AST.TokenNode(p[3])])
 
 
 def p_minus(p):
@@ -162,6 +162,13 @@ def p_statement_real(p):
 # STATEMENT : variable type : CHAR
 def p_statement_char(p):
     """  statement : CHAR_VALUE """
+    # p[0] = p[1]
+    p[0] = AST.TokenNode(p[1])
+
+
+# STATEMENT : variable type : CHAR
+def p_statement_identifier(p):
+    """  statement : IDENTIFIER """
     # p[0] = p[1]
     p[0] = AST.TokenNode(p[1])
 

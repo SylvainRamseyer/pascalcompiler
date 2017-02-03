@@ -89,8 +89,10 @@ def execute(code, adresses):
         if mnemo == "PUSHC":
             sappend(float(code[ip][1]))
         elif mnemo == "PUSHV":
+            if code[ip][1] in vars:
+                sappend(vars[code[ip][1]])
+            else:
                 sappend(code[ip][1])
-                # sappend(vars[code[ip][1]])
         elif mnemo == "SET":
             val = spop()
             vars[code[ip][1]] = val

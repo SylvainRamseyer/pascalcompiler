@@ -52,6 +52,7 @@ def compile(self):
 
 @add_to_class(AST.VarDeclarationNode)
 def compile(self):
+    bytecode = ""
     var_name = self.children[0]  # key
     var_type = self.children[1].children[0]  # type
     var_value = None
@@ -59,8 +60,10 @@ def compile(self):
     if var_name in variables:
         raise Exeption('symbol', var_name, 'already exist')
 
-    variables[var_name] = (var_type, var_value)
-    return ""
+    # variables[var_name] = (var_type, var_value)
+    bytecode += "PUSHV None\n"
+    bytecode += "SET %s\n" % self.children[0].tok
+    return bytecode
 
 
 @add_to_class(AST.BlockNode)
