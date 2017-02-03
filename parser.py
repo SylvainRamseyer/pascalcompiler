@@ -37,6 +37,7 @@ def p_program(p):
 def p_block(p):
     """ block : statement_part """
     p[0] = AST.BlockNode(p[1])
+    # p[0] = p[1]
 
 
 def p_var_decl_block(p):
@@ -94,7 +95,8 @@ def p_minus(p):
 
 def p_assignation(p):
     """ statement : assignation """
-    p[0] = AST.AssignNode(p[1])
+    # p[0] = AST.AssignNode(p[1])
+    p[0] = p[1]
 
 
 # EXPRESSION : logical operators
