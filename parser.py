@@ -36,7 +36,7 @@ def p_program(p):
 # BLOCK :
 def p_block(p):
     """ block : statement_part """
-    p[0] = AST.BlockNode(p[1])
+    p[0] = p[1]
     # p[0] = p[1]
 
 
@@ -130,15 +130,19 @@ def p_assign(p):
 
 # STATEMENT : block
 def p_statement_part(p):
-    """ statement_part : BEGIN statement END """
-    p[0] = p[2]
+    """ statement_part : BEGIN statement_list END """
+    p[0] = AST.BlockNode(p[2])
 
 
-# STATEMENT : nested statement
-def p_statement(p):
-    """ statement : statement ';' statement
+
+# STATEMENT_LIST
+def p_statement_list(p):
+    """ statement_list : statement ';' statement_list
         | statement ';' """
-    p[0] = p[1]
+    if len(p) > 3 :
+        p[0] = AST.StatementList([p[1]]+p[3].children)
+    else:
+        p[0] = AST.StatementList(p[1])        
 
 
 # STATEMENT : variable type : INT

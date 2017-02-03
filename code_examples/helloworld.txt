@@ -4,8 +4,8 @@ VAR
   titi : real;
   tata : boolean;
 Begin
-  toto := 12;
   Write('h');
   Write(12.0);
+  toto := 12;
   Write(24);
 End.

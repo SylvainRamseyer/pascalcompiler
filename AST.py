@@ -188,6 +188,11 @@ class AssignNode(Node):
 
 
 # BLOCK
+class StatementList(Node):
+    type = 'statement_list'
+
+
+# BLOCK
 class BlockNode(Node):
     type = 'block'
 
