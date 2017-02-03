@@ -1,0 +1,121 @@
+Introduction
+    But du projet :
+	Pascal :
+		Comparé aux langages tels que le C, Pascal peut être considéré comme
+		étant un langage relativement restrictif.
+		Se repose beaucoup sur une structuration stricte du code et des données.
+
+Cahier des charges
+	Voici l'ébauche du cahier des charges qui s'est voulu relativement
+	ambitieux afin de coller au maximum au langage Pascal. Il a cependant fallu
+	revoir nos exigences à la baisse pour les raisons qui sont évoquées dans
+	la Conclusion.
+
+Spécifications du langage
+	Présente les différents éléments qui sont pris en charge par le
+	compilateur dans son état actuel.
+
+	Types de variables:
+		les nombres entiers (INTEGER)
+		les nombres réels (REAL)
+		les caractères (CHAR)
+		les booléens (BOOLEAN)
+
+	Opérateurs
+		les opérateurs arithmétiques:
+			l'addition
+			la soustraction
+			la multiplication
+			la division
+		les opérateurs logiques :
+			et (AND)
+			ou (OR)
+
+	Boucles et conditions
+		if
+		while
+
+	Fonction(s)
+		La fonction suivante a été ajoutée au projet:
+			write
+
+Structure du langage
+	voir Wiki du git
+
+Déroulement et omposition du projet
+	(ordre chronologique)
+		lexer.py
+			contenu :
+				les mots réservés
+				la définition des types de lexemes
+				tout ce qui sert à leur identification via le parseur
+				un identificateur d'erreurs relatif aux lexemes
+			commentaire :
+				est le seul fichier qui peut être lancé tout seul
+
+		parser.py
+			contenu :
+				les fonctions qui permettent
+					l'identification des lexemes trouvés dans le fichier
+						définis dans le lexer
+					la reconnaissance de la structure du fichier passé en
+						paramètre
+					la récupération et l'assignation de ses données
+						aux bons noms de variable
+
+			commentaire :
+
+		AST.py
+		    contenu :
+                une classe Node principale qui permet la création d'un arbre des
+                    dépendances (ascii et graphique)
+                des classes Node secondaires qui récupèrent les données suivant
+                    leur spécification (un OpNode ne s'occupera que des noeuds
+                    qui contiennent des opérateurs, un PrintNode des noeuds de
+                    la fonction Write, etc)
+                une classe qui permet l'ajout d'un décorateur aux fonctions qui
+                    sont utilisées par Threader.py
+
+			commentaire :
+				permet la création de l'arbre qui représente la structure du
+				programme
+
+		threader.py
+			contenu :
+			    une fonction principale de couture qui sert de point de départ
+			        aux coutures qui seront effectuées par la suite.
+			    des fonctions de coutures qui ajoutent un décorateur aux Node
+			        secondaires afin de les dessiner sur l'arbre graphique créé
+			        précédemment, après l'appel de la fonction citée en-dessus.
+			commentaire :
+			    l'avantage de cette procédure est qu'on voit quelles sont les étapes
+			        par lesquelles passe le programme. Bien entendu, plus le programme
+			        est compliqué, moins le résultat est lisible.
+
+		interpreter.py (à voir si iteratif ou recursif..)
+			contenu :
+
+			commentaire :
+
+		compiler.py
+			contenu :
+                utilisation des décorateurs
+			commentaire :
+
+		svm.py
+			contenu :
+                une fonction de parsing
+                une fonction d'exécution
+			commentaire :
+                est la machine virtuelle qui est utilisée pour sortir le
+                    bytecode du fichier à analyser; le résultat obtenu
+                    est un pseudocode assembleur.
+Prise en main
+	exemple de code
+
+Conclusion
+	Problèmes rencontrés
+		Il est apparu en cours de route que le cahier des charges tel que présenté
+		dans le document a été beaucoup trop ambitieux par rapport au résultat
+		obtenu. En effet, l'avancement a pris beaucoup de retard dès le début du
+		développement du parseur voulant aller trop vite.
