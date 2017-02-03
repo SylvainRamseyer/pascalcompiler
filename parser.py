@@ -142,7 +142,7 @@ def p_statement_list(p):
     if len(p) > 3 :
         p[0] = AST.StatementList([p[1]]+p[3].children)
     else:
-        p[0] = AST.StatementList(p[1])        
+        p[0] = AST.StatementList(p[1])
 
 
 # STATEMENT : variable type : INT
@@ -188,6 +188,9 @@ precedence = (
 )
 
 parser = yacc.yacc(outputdir='generated')
+
+def parse(program):
+    return yacc.parse(program)
 
 if __name__ == "__main__":
     import sys

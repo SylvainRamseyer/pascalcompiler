@@ -188,7 +188,7 @@ class AssignNode(Node):
 
 
 # BLOCK
-class StatementList(Node):
+class StatementListNode(Node):
     type = 'statement_list'
 
 
