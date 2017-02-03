@@ -134,12 +134,11 @@ def p_statement_part(p):
     p[0] = AST.BlockNode(p[2])
 
 
-
 # STATEMENT_LIST
 def p_statement_list(p):
     """ statement_list : statement ';' statement_list
         | statement ';' """
-    if len(p) > 3 :
+    if len(p) > 3:
         p[0] = AST.StatementListNode([p[1]]+p[3].children)
     else:
         p[0] = AST.StatementListNode(p[1])
@@ -188,6 +187,7 @@ precedence = (
 )
 
 parser = yacc.yacc(outputdir='generated')
+
 
 def parse(program):
     return yacc.parse(program)
