@@ -20,7 +20,7 @@ variables = {}
 def p_file(p):
     """ file : program """
     p[0] = AST.FileNode(p[1])
-    #p[0] = p[1]
+    # p[0] = p[1]
 
 
 # PROGRAM declaration : PROGRAM program_name;
@@ -88,7 +88,7 @@ def p_statement_float_op(p):
 
 def p_minus(p):
     """ statement : ADD_OP statement %prec UMINUS """
-    #p[0] = operations[p[1]](0, int(p[2]))
+    # p[0] = operations[p[1]](0, int(p[2]))
     p[0] = AST.OpNode(p[1], [0, p[2]])
 
 
@@ -122,7 +122,8 @@ def p_assign(p):
         exit('Unknown variable "%s" at line %d.' % (p[1], p.lineno(1)))
     variables[p[1]] = p[4]
     print(p[1], "contains", p[4])
-    p[0] = p[4]
+    # p[0] = p[4]
+    p[0] = AST.AssignNode([AST.TokenNode(p[1]), p[4]])
 
 
 # STATEMENT : block
@@ -141,24 +142,28 @@ def p_statement(p):
 # STATEMENT : variable type : INT
 def p_statement_int(p):
     """ statement : INTEGER_VALUE """
-    p[0] = p[1]
+    # p[0] = p[1]
+    p[0] = AST.TokenNode(p[1])
 
 
 # STATEMENT : variable type : REAL
 def p_statement_real(p):
     """ statement : REAL_VALUE """
-    p[0] = p[1]
+    # p[0] = p[1]
+    p[0] = AST.TokenNode(p[1])
 
 
 # STATEMENT : variable type : CHAR
 def p_statement_char(p):
     """  statement : CHAR_VALUE """
-    p[0] = p[1]
+    # p[0] = p[1]
+    p[0] = AST.TokenNode(p[1])
 
 
 def p_write(p):
     """ statement : WRITE '(' statement ')' """
-    p[0] = p[2]
+    # p[0] = p[2]
+    p[0] = AST.PrintNode(p[3])
 
 
 # ERROR check
@@ -182,6 +187,16 @@ if __name__ == "__main__":
     import sys
     prog = open(sys.argv[1]).read()
     result = yacc.parse(prog, debug=1)
-    print(result)
+    if result:
+        print(result)
+
+        import os
+        graph = result.make_graphical_tree()
+        name = os.path.splitext(sys.argv[1])[0]+'-ast.pdf'
+        graph.write_pdf(name)
+        print("wrote ast to", name)
+    else:
+        print("Parsing returned no result!")
+    # print(result)
     print("Here are your variables")
     print(variables)

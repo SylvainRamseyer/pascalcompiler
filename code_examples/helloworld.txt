@@ -7,5 +7,5 @@ Begin
   toto := 12;
   Write('h');
   Write(12.0);
-	Write(24);
+  Write(24);
 End.
