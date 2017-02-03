@@ -1,6 +1,7 @@
 # Project specific files
 generated
 code_examples/*.pdf
+code_examples/*.vm
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -140,9 +140,9 @@ def p_statement_list(p):
     """ statement_list : statement ';' statement_list
         | statement ';' """
     if len(p) > 3 :
-        p[0] = AST.StatementList([p[1]]+p[3].children)
+        p[0] = AST.StatementListNode([p[1]]+p[3].children)
     else:
-        p[0] = AST.StatementList(p[1])
+        p[0] = AST.StatementListNode(p[1])
 
 
 # STATEMENT : variable type : INT

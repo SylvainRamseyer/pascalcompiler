@@ -3,10 +3,10 @@ from AST import add_to_class
 from functools import reduce
 
 operations = {
-    '+' : "ADD\n",
-    '-' : "SUB\n",
-    '∗' : "MUL\n",
-    '/' : "DIV\n",
+    '+': "ADD\n",
+    '-': "SUB\n",
+    '∗': "MUL\n",
+    '/': "DIV\n",
 }
 
 variables = {}
@@ -17,6 +17,7 @@ variables = {}
 #
 # whilecounter.current = 0
 
+
 @add_to_class(AST.FileNode)
 def compile(self):
     bytecode = ""
@@ -24,43 +25,55 @@ def compile(self):
         bytecode += c.compile()
     return bytecode
 
+
 @add_to_class(AST.ProgramNode)
 def compile(self):
+    bytecode = ""
     for c in self.children:
         bytecode += c.compile()
     return bytecode
+
 
 @add_to_class(AST.VarDeclBlockNode)
 def compile(self):
+    bytecode = ""
     for c in self.children:
         bytecode += c.compile()
     return bytecode
+
 
 @add_to_class(AST.VarDeclListNode)
 def compile(self):
+    bytecode = ""
     for c in self.children:
         bytecode += c.compile()
     return bytecode
+
 
 @add_to_class(AST.VarDeclarationNode)
 def compile(self):
-    var_name = self.children[0] # key
-    var_type = self.children[1].children[0] # type
+    var_name = self.children[0]  # key
+    var_type = self.children[1].children[0]  # type
     var_value = None
 
-    if variables.has_key(var_name) :
-        raise Exeption('symbol', var_name , 'already exist')
+    if var_name in variables:
+        raise Exeption('symbol', var_name, 'already exist')
 
     variables[var_name] = (var_type, var_value)
+    return ""
+
 
 @add_to_class(AST.BlockNode)
 def compile(self):
+    bytecode = ""
     for c in self.children:
         bytecode += c.compile()
     return bytecode
 
+
 @add_to_class(AST.StatementListNode)
 def compile(self):
+    bytecode = ""
     for c in self.children:
         bytecode += c.compile()
     return bytecode
@@ -73,6 +86,7 @@ def compile(self):
     else:
         return "PUSHC %s\n" % self.tok
 
+
 @add_to_class(AST.OpNode)
 def compile(self):
     bytecode = ""
@@ -82,12 +96,14 @@ def compile(self):
     bytecode += operations[self.op]
     return bytecode
 
+
 @add_to_class(AST.AssignNode)
 def compile(self):
     bytecode = ""
     bytecode += "%s" % self.children[1].compile()
     bytecode += "SET %s\n" % self.children[0].tok
     return bytecode
+
 
 @add_to_class(AST.PrintNode)
 def compile(self):
@@ -110,7 +126,8 @@ def compile(self):
 
 if __name__ == "__main__":
     from parser import parse
-    import sys, os
+    import sys
+    import os
     prog = open(sys.argv[1]).read()
     ast = parse(prog)
     compiled = ast.compile()
