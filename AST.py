@@ -123,6 +123,7 @@ class Node:
     NODE TYPES
 """
 
+
 class FileNode(Node):
     type = 'File'
 
@@ -130,21 +131,26 @@ class FileNode(Node):
 # PROGRAM
 class ProgramNode(Node):
     type = 'Program'
-    def __init__(self,program_indentifier, children):
+
+    def __init__(self, program_indentifier, children):
         Node.__init__(self, children)
         self.program_indentifier = program_indentifier
 
     def __repr__(self):
         return repr(self.program_indentifier)
 
+
 class VarDeclBlockNode(Node):
     type = "var_decl_block"
+
 
 class VarDeclListNode(Node):
     type = "var_decl_list"
 
+
 class VarDeclarationNode(Node):
     type = "var_declaration"
+
 
 class TypeNode(Node):
     type = "type"
