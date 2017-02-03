@@ -2,6 +2,7 @@
 generated
 code_examples/*.pdf
 code_examples/*.vm
+out.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -168,6 +168,17 @@ class TokenNode(Node):
         return repr(self.tok)
 
 
+class IntTokenNode(Node):
+    type = 'integer'
+
+    def __init__(self, tok):
+        Node.__init__(self)
+        self.tok = tok
+
+    def __repr__(self):
+        return repr(int(self.tok))
+
+
 # OPERATION
 class OpNode(Node):
     def __init__(self, op, children):

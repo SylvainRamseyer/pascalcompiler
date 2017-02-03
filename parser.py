@@ -78,7 +78,8 @@ def p_statement_int_op(p):
     # print("P 2 : ", p[2])
     # print("P 3 : ", p[3])
 
-    p[0] = AST.OpNode(p[2], [p[1], p[3]])
+    # p[0] = AST.OpNode(p[2], [p[1], p[3]])
+    p[0] = AST.OpNode(p[2], [AST.TokenNode(p[1]), AST.TokenNode(p[3])])
 
 
 def p_statement_float_op(p):
