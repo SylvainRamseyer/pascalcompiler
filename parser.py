@@ -118,6 +118,16 @@ def p_write(p):
     p[0] = AST.PrintNode(p[3])
 
 
+def p_while(p):
+    """ statement : WHILE boolean_expression DO statement_part """
+    p[0] = AST.WhileNode([p[2], p[4]])
+
+
+def p_boolean_expression(p):
+    """ boolean_expression : statement '<' '>' statement """
+    p[0] = AST.BoolExpressionNode(p[2] + p[3], [p[1], p[4]])
+
+
 # ERROR check
 def p_error(p):
     print("Syntax error in line %d" % p.lineno)

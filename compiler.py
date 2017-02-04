@@ -15,11 +15,12 @@ variables = {}
 char_pattern = re.compile("'[a-zA-Z]'")
 id_pattern = re.compile('[A-Za-z_]\w*')
 
-# def whilecounter():
-#     whilecounter.current += 1
-#     return whilecounter.current
-#
-# whilecounter.current = 0
+
+def whilecounter():
+    whilecounter.current += 1
+    return whilecounter.current
+
+whilecounter.current = 0
 
 
 def check_type(val1, val2):
@@ -135,17 +136,29 @@ def compile(self):
     bytecode += "PRINT\n"
     return bytecode
 
-# @add_to_class(AST.WhileNode)
-# def compile(self):
-#     counter = whilecounter()
-#     bytecode = ""
-#     bytecode += "JMP cond%s\n" % counter
-#     bytecode += "body%s:" % counter
-#     bytecode += self.children[1].compile()
-#     bytecode += "cond%s:" % counter
-#     bytecode += self.children[0].compile()
-#     bytecode += "JINZ body%s" % counter
-#     return bytecode
+
+@add_to_class(AST.BoolExpressionNode)
+def compile(self, counter):
+    bytecode = ""
+    for child in self.children:
+        bytecode += child.compile()
+
+    if self.op == '<>':
+        bytecode += "ADD\n"
+        bytecode += "JINZ body%s\n" % counter
+    return bytecode
+
+
+@add_to_class(AST.WhileNode)
+def compile(self):
+    counter = whilecounter()
+    bytecode = ""
+    bytecode += "JMP cond%s\n" % counter
+    bytecode += "body%s: " % counter
+    bytecode += self.children[1].compile()
+    bytecode += "cond%s: " % counter
+    bytecode += self.children[0].compile(counter)
+    return bytecode
 
 if __name__ == "__main__":
     from parser import parse

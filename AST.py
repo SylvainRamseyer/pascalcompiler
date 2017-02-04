@@ -218,6 +218,21 @@ class WhileNode(Node):
     type = 'while'
 
 
+class BoolExpressionNode(Node):
+    type = "boolean_expression"
+
+    def __init__(self, op, children):
+        Node.__init__(self, children)
+        self.op = op
+        try:
+            self.args_number = len(children)
+        except AttributeError:
+            self.args_number = 1
+
+    def __repr__(self):
+        return "%s (%s)" % (self.op, self.args_number)
+
+
 # ENTRY
 class EntryNode(Node):
     type = 'ENTRY'

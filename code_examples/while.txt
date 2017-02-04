@@ -1,0 +1,24 @@
+program Hello_World;
+var
+  toto : integer;
+  tata : integer;
+  titi : real;
+  tutu : char;
+begin
+  toto := -12;
+  tata := 4;
+  write(12.4 + 2.2);
+  while tata <> 0 do
+  begin
+    write(tata);
+    write('h');
+    tata := tata - 1;
+  end;
+  write(tata);
+  tutu := 's';
+  write(tutu);
+  tata := toto + 28;
+  write(tata);
+  toto := toto + tata;
+  write(toto);
+end.

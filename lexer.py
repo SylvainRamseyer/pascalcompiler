@@ -24,8 +24,8 @@ reserved_words = (
     # 'else',
     # 'repeat',
     # 'until',
-    # 'while',
-    # 'do',
+    'while',
+    'do',
     'write',        # misc
     # 'writeln'
 )
@@ -88,7 +88,7 @@ t_BEGIN = r"""(?i)begin"""      # END/START SECTION
 t_END = r"""(?i)end"""
 t_WRITE = r"""(?i)write"""      # MISC
 # t_WRITELN = r"""(?i)writeln"""
-literals = '();={}.:'
+literals = '();={}.:<>'
 
 
 # IDENTIFIER : variables' name
