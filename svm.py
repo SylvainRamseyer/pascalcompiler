@@ -109,10 +109,7 @@ def execute(code, adresses):
                     exit("Unsupported value type")
 
         elif mnemo == "PUSHV":
-            if code[ip][1] in vars:
-                sappend(vars[code[ip][1]])
-            else:
-                sappend(code[ip][1])
+            sappend(vars[code[ip][1]])
         elif mnemo == "SET":
             val = spop()
             vars[code[ip][1]] = val
@@ -123,11 +120,8 @@ def execute(code, adresses):
 
         # Arithmetics
         elif mnemo == "ADD":
-            print("stack:", stack)
             val2 = spop()
             val1 = spop()
-            print("val1", val1)
-            print("val2", val2)
             sappend(val1 + val2)
         elif mnemo == "SUB":
             val2 = spop()

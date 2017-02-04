@@ -13,6 +13,7 @@ operations = {
 variables = {}
 
 char_pattern = re.compile("'[a-zA-Z]'")
+id_pattern = re.compile('[A-Za-z_]\w*')
 
 # def whilecounter():
 #     whilecounter.current += 1
@@ -95,8 +96,9 @@ def compile(self):
             print('Variable', self.tok, 'has not been declared.')
             exit()
     else:
-        return "PUSHC %s\n" % str(self.tok).rstrip('\n')
-
+        if id_pattern.match(str(self.tok).replace("'", "")):
+            return "PUSHV %s\n" % str(self.tok).rstrip('\n').replace("'", "")
+        return "PUSHC %s\n" % str(self.tok).rstrip('\n').replace("'", "")
 
 @add_to_class(AST.OpNode)
 def compile(self):
