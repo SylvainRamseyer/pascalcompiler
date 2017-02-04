@@ -22,6 +22,10 @@ id_pattern = re.compile('[A-Za-z_]\w*')
 # whilecounter.current = 0
 
 
+def check_type(val1, val2):
+    return type(val1) != type(val2)
+
+
 @add_to_class(AST.FileNode)
 def compile(self):
     bytecode = ""
@@ -100,10 +104,16 @@ def compile(self):
             return "PUSHV %s\n" % str(self.tok).rstrip('\n').replace("'", "")
         return "PUSHC %s\n" % str(self.tok).rstrip('\n').replace("'", "")
 
+
 @add_to_class(AST.OpNode)
 def compile(self):
     bytecode = ""
     args = [c.compile() for c in self.children]
+
+    if len(args) == 1:
+        bytecode += "PUSHC %s" % self.children[0]
+        return bytecode + "USUB %s" % self.children[0]
+
     for operand in args:
         bytecode += operand
     bytecode += operations[self.op]
@@ -142,7 +152,10 @@ if __name__ == "__main__":
     import sys
     import os
     prog = open(sys.argv[1]).read()
-    ast = parse(prog)
+    try:
+        ast = parse(prog)
+    except Exception as e:
+        exit(e)
     compiled = ast.compile()
     name = os.path.splitext(sys.argv[1])[0] + '.vm'
     outfile = open(name, 'w')

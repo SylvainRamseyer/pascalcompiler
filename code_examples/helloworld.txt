@@ -5,7 +5,7 @@ VAR
   titi : real;
   tutu : char;
 Begin
-  toto := 12;
+  toto := -12;
   tata := 4;
   Write(12.4 + 2.2);
   Write('h');

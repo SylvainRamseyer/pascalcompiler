@@ -74,7 +74,7 @@ def p_statement_int_op(p):
 
 def p_minus(p):
     """ statement : ADD_OP statement %prec UMINUS """
-    p[0] = AST.OpNode(p[1], [0, p[2]])
+    p[0] = AST.OpNode(p[1], [p[2]])
 
 
 def p_assignation(p):
@@ -122,6 +122,7 @@ def p_write(p):
 def p_error(p):
     print("Syntax error in line %d" % p.lineno)
     parser.errok()
+    raise Exception("Error while parsing")
 
 
 # LEXEMES : priority rules

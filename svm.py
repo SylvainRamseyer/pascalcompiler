@@ -122,18 +122,26 @@ def execute(code, adresses):
         elif mnemo == "ADD":
             val2 = spop()
             val1 = spop()
+            # if not check_type(val1, val2):
+            #     exit("Operands' types are diffent. Stopped running.")
             sappend(val1 + val2)
         elif mnemo == "SUB":
             val2 = spop()
             val1 = spop()
+            # if not check_type(val1, val2):
+            #     exit("Operands' types are diffent. Stopped running.")
             sappend(val1 - val2)
         elif mnemo == "MUL":
             val2 = spop()
             val1 = spop()
+            # if not check_type(val1, val2):
+            #     exit("Operands' types are diffent. Stopped running.")
             sappend(val1 * val2)
         elif mnemo == "DIV":
             val2 = spop()
             val1 = spop()
+            # if not check_type(val1, val2):
+            #     exit("Operands' types are diffent. Stopped running.")
             sappend(val1 / val2)
         elif mnemo == "USUB":
             stack[-1] = -stack[-1]
