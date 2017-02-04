@@ -90,7 +90,6 @@ def execute(code, adresses):
 
         # Stack and memory manipulation
         if mnemo == "PUSHC":
-
             if code[ip][1] == 'None':
                 sappend(0.0)
             elif char_pattern.match(code[ip][1]):
@@ -98,10 +97,14 @@ def execute(code, adresses):
             else:
                 try:
                     sappend(int(code[ip][1]))
+                    ip += 1
+                    continue
                 except ValueError:
                     pass
                 try:
                     sappend(float(code[ip][1]))
+                    ip += 1
+                    continue
                 except ValueError:
                     exit("Unsupported value type")
 
@@ -120,8 +123,11 @@ def execute(code, adresses):
 
         # Arithmetics
         elif mnemo == "ADD":
+            print("stack:", stack)
             val2 = spop()
             val1 = spop()
+            print("val1", val1)
+            print("val2", val2)
             sappend(val1 + val2)
         elif mnemo == "SUB":
             val2 = spop()

@@ -12,4 +12,7 @@ Begin
   Write(tata);
   tutu := 's';
   Write(tutu);
+  tata := 13 + 28;
+  Write(tata);
+  Write(toto);
 End.
