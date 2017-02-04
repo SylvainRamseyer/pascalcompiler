@@ -3,9 +3,13 @@ VAR
   toto : integer;
   tata : integer;
   titi : real;
+  tutu : char;
 Begin
   toto := 12;
   tata := 4;
   Write(12.4 + 2.2);
   Write('h');
+  Write(tata);
+  tutu := 's';
+  Write(tutu);
 End.

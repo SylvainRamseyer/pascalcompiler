@@ -58,7 +58,8 @@ def p_var_declaration(p):
 def p_type(p):
     """ type : INTEGER
         | BOOLEAN
-        | REAL """
+        | REAL
+        | CHAR """
     p[0] = AST.TypeNode(AST.TokenNode(p[1]))
 
 

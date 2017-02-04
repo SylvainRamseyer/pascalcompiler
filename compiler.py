@@ -12,6 +12,8 @@ operations = {
 
 variables = {}
 
+char_pattern = re.compile("'[a-zA-Z]'")
+
 # def whilecounter():
 #     whilecounter.current += 1
 #     return whilecounter.current
@@ -53,13 +55,11 @@ def compile(self):
 
 @add_to_class(AST.VarDeclarationNode)
 def compile(self):
-    print(str(self.children[0]).rstrip('\n'))
     bytecode = ""
-    var_name = str(self.children[0]).rstrip('\n')  # key
-    var_type = self.children[1].children[0]  # type
+    var_name = str(self.children[0]).rstrip('\n').replace("'", "")  # key
 
     if var_name in variables:
-        print('symbol', var_name, 'already exist')
+        print('Variable', var_name, 'already declared')
         exit()
 
     variables[var_name] = None
@@ -86,12 +86,10 @@ def compile(self):
 
 @add_to_class(AST.TokenNode)
 def compile(self):
-    pattern = re.compile("'[a-zA-Z]'")
-    print(self.tok)
     if isinstance(self.tok, str):
         if self.tok in variables:
             return "PUSHV %s\n" % self.tok
-        elif pattern.match(self.tok):
+        elif char_pattern.match(self.tok):
             return "PUSHC %s\n" % str(self.tok).rstrip('\n')
         else:
             print('Variable', self.tok, 'has not been declared.')
