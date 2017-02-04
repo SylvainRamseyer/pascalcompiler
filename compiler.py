@@ -1,6 +1,7 @@
 import AST
 from AST import add_to_class
 from functools import reduce
+import re
 
 operations = {
     '+': "ADD\n",
@@ -52,16 +53,17 @@ def compile(self):
 
 @add_to_class(AST.VarDeclarationNode)
 def compile(self):
+    print(str(self.children[0]).rstrip('\n'))
     bytecode = ""
-    var_name = self.children[0]  # key
+    var_name = str(self.children[0]).rstrip('\n')  # key
     var_type = self.children[1].children[0]  # type
-    var_value = None
 
     if var_name in variables:
-        raise Exeption('symbol', var_name, 'already exist')
+        print('symbol', var_name, 'already exist')
+        exit()
 
-    # variables[var_name] = (var_type, var_value)
-    bytecode += "PUSHV None\n"
+    variables[var_name] = None
+    bytecode += "PUSHC None\n"
     bytecode += "SET %s\n" % self.children[0].tok
     return bytecode
 
@@ -84,10 +86,18 @@ def compile(self):
 
 @add_to_class(AST.TokenNode)
 def compile(self):
+    pattern = re.compile("'[a-zA-Z]'")
+    print(self.tok)
     if isinstance(self.tok, str):
-        return "PUSHV %s\n" % self.tok
+        if self.tok in variables:
+            return "PUSHV %s\n" % self.tok
+        elif pattern.match(self.tok):
+            return "PUSHC %s\n" % str(self.tok).rstrip('\n')
+        else:
+            print('Variable', self.tok, 'has not been declared.')
+            exit()
     else:
-        return "PUSHC %s\n" % self.tok
+        return "PUSHC %s\n" % str(self.tok).rstrip('\n')
 
 
 @add_to_class(AST.OpNode)

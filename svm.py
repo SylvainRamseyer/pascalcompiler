@@ -1,4 +1,5 @@
 import sys
+import re
 
 """ SVM - Simple Virtual Machine (or Stupid Virtual Machine)
 Very simplistic virtual machine aimed to illustrate some compilers' concepts.
@@ -57,6 +58,8 @@ The format of svm's "bytecode" is the following:
     SVM v0.1 - Matthieu Amiguet/HE-Arc, 2008
 """
 
+char_pattern = re.compile("'[a-zA-Z]'")
+
 
 def parse(filename):
     code = [line.split(':') for line in open(filename)]
@@ -75,7 +78,7 @@ def parse(filename):
 def execute(code, adresses):
     ip = 0  # instruction pointer
     stack = []  # execution stack
-    vars = {}  # "central memory"
+    vars = {'None': None}  # "central memory"
 
     # this is for speed optimization
     spop = stack.pop
@@ -87,7 +90,21 @@ def execute(code, adresses):
 
         # Stack and memory manipulation
         if mnemo == "PUSHC":
-            sappend(float(code[ip][1]))
+
+            if code[ip][1] == 'None':
+                sappend(0.0)
+            elif char_pattern.match(code[ip][1]):
+                sappend(code[ip][1])
+            else:
+                try:
+                    sappend(int(code[ip][1]))
+                except ValueError:
+                    pass
+                try:
+                    sappend(float(code[ip][1]))
+                except ValueError:
+                    exit("Unsupported value type")
+
         elif mnemo == "PUSHV":
             if code[ip][1] in vars:
                 sappend(vars[code[ip][1]])
@@ -105,19 +122,19 @@ def execute(code, adresses):
         elif mnemo == "ADD":
             val2 = spop()
             val1 = spop()
-            sappend(val1+val2)
+            sappend(val1 + val2)
         elif mnemo == "SUB":
             val2 = spop()
             val1 = spop()
-            sappend(val1-val2)
+            sappend(val1 - val2)
         elif mnemo == "MUL":
             val2 = spop()
             val1 = spop()
-            sappend(val1*val2)
+            sappend(val1 * val2)
         elif mnemo == "DIV":
             val2 = spop()
             val1 = spop()
-            sappend(val1/val2)
+            sappend(val1 / val2)
         elif mnemo == "USUB":
             stack[-1] = -stack[-1]
 

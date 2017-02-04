@@ -12,15 +12,11 @@ operations = {
     'or': lambda x, y: x or y,
 }
 
-# dictionary
-variables = {}
-
 
 # FILE : program entry
 def p_file(p):
     """ file : program """
     p[0] = AST.FileNode(p[1])
-    # p[0] = p[1]
 
 
 # PROGRAM declaration : PROGRAM program_name;
@@ -37,7 +33,6 @@ def p_program(p):
 def p_block(p):
     """ block : statement_part """
     p[0] = p[1]
-    # p[0] = p[1]
 
 
 def p_var_decl_block(p):
@@ -57,7 +52,6 @@ def p_var_decl_list(p):
 
 def p_var_declaration(p):
     """ var_declaration : IDENTIFIER ':' type """
-    variables[p[1]] = ""
     p[0] = AST.VarDeclarationNode([AST.TokenNode(p[1]), p[3]])
 
 
@@ -70,62 +64,26 @@ def p_type(p):
 
 # EXPRESSION : arithmetic operators
 def p_statement_int_op(p):
-    """ statement : INTEGER_VALUE ADD_OP INTEGER_VALUE
-        | INTEGER_VALUE MUL_OP INTEGER_VALUE """
-    # p[0] = operations[p[2]](int(p[1]), int(p[3]))
-    # print("P 0 : ", p[0])
-    # print("P 1 : ", p[1])
-    # print("P 2 : ", p[2])
-    # print("P 3 : ", p[3])
-
-    # p[0] = AST.OpNode(p[2], [p[1], p[3]])
-    p[0] = AST.OpNode(p[2], [AST.TokenNode(p[1]), AST.TokenNode(p[3])])
-
-
-def p_statement_float_op(p):
-    """ statement : REAL_VALUE ADD_OP REAL_VALUE
-        | REAL_VALUE MUL_OP REAL_VALUE """
+    """ statement : statement ADD_OP statement
+        | statement MUL_OP statement
+        | statement AND statement
+        | statement OR statement """
     p[0] = AST.OpNode(p[2], [AST.TokenNode(p[1]), AST.TokenNode(p[3])])
 
 
 def p_minus(p):
     """ statement : ADD_OP statement %prec UMINUS """
-    # p[0] = operations[p[1]](0, int(p[2]))
     p[0] = AST.OpNode(p[1], [0, p[2]])
 
 
 def p_assignation(p):
     """ statement : assignation """
-    # p[0] = AST.AssignNode(p[1])
     p[0] = p[1]
-
-
-# EXPRESSION : logical operators
-def p_statement_and(p):
-    """ statement : INTEGER_VALUE AND INTEGER_VALUE """
-    # p[0] = operations[p[2]](p[1], p[3])
-    # print("P 0 : ", p[0])
-    # print("P 1 : ", p[1])
-    # print("P 2 : ", p[2])
-    # print("P 3 : ", p[3])
-
-    p[0] = AST.OpNode(p[2], [p[1], p[3]])
-
-
-def p_statement_or(p):
-    """ statement : INTEGER_VALUE OR INTEGER_VALUE """
-    p[0] = AST.OpNode(p[2], [p[1], p[3]])
 
 
 # ASSIGNATION : toto = expression
 def p_assign(p):
     """ assignation : IDENTIFIER ':' '=' statement """
-    # (dictionary) : id(key), expression(value)
-    if variables.get(p[1], None) is None:
-        exit('Unknown variable "%s" at line %d.' % (p[1], p.lineno(1)))
-    variables[p[1]] = p[4]
-    print(p[1], "contains", p[4])
-    # p[0] = p[4]
     p[0] = AST.AssignNode([AST.TokenNode(p[1]), p[4]])
 
 
@@ -147,35 +105,15 @@ def p_statement_list(p):
 
 # STATEMENT : variable type : INT
 def p_statement_int(p):
-    """ statement : INTEGER_VALUE """
-    # p[0] = p[1]
-    p[0] = AST.TokenNode(p[1])
-
-
-# STATEMENT : variable type : REAL
-def p_statement_real(p):
-    """ statement : REAL_VALUE """
-    # p[0] = p[1]
-    p[0] = AST.TokenNode(p[1])
-
-
-# STATEMENT : variable type : CHAR
-def p_statement_char(p):
-    """  statement : CHAR_VALUE """
-    # p[0] = p[1]
-    p[0] = AST.TokenNode(p[1])
-
-
-# STATEMENT : variable type : CHAR
-def p_statement_identifier(p):
-    """  statement : IDENTIFIER """
-    # p[0] = p[1]
+    """ statement : INTEGER_VALUE
+        | REAL_VALUE
+        | CHAR_VALUE
+        | IDENTIFIER """
     p[0] = AST.TokenNode(p[1])
 
 
 def p_write(p):
     """ statement : WRITE '(' statement ')' """
-    # p[0] = p[2]
     p[0] = AST.PrintNode(p[3])
 
 
@@ -214,6 +152,3 @@ if __name__ == "__main__":
         print("wrote ast to", name)
     else:
         print("Parsing returned no result!")
-    # print(result)
-    print("Here are your variables")
-    print(variables)

@@ -41,13 +41,32 @@ tokens = (
     'INTEGER_VALUE',    # types
     'REAL_VALUE',
     'CHAR_VALUE',
+    'NUMBER',
 ) + tuple(map(lambda s: s.upper(), reserved_words))
 
 t_ADD_OP = r'[+-]'              # LEXEMES : + -
 t_MUL_OP = r'[*/]'              # LEXEMES : * /
-t_INTEGER_VALUE = r'\d+'              # INTEGER : returns an integer
-'''FLOATING NUMBERS: numbers like 4.0f are not handled '''
-t_REAL_VALUE = r'\d+\.\d+'
+
+
+def t_NUMBER(t):
+    r'[0-9]*\.?[0-9]+((E|e)(\+|-)?[0-9]+)?'
+    try:
+        t.value = int(t.value)
+        t.type = 'INTEGER_VALUE'
+        return t
+    except ValueError:
+        pass
+
+    try:
+        t.value = float(t.value)
+        t.type = 'REAL_VALUE'
+        return t
+    except ValueError:
+        pass
+
+    print("Not INT or FLOAT: " + t.value)
+    exit()
+
 t_CHAR_VALUE = r"""['].[']|['][']"""  # CHAR: returns character
 # t_BOOL_VALUE = r"""^(?i)(true|false)$"""
 # t_VAR = r"""(?i)var"""
