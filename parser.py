@@ -1,6 +1,10 @@
 import ply.yacc as yacc
 import AST
 from lexer import tokens
+from terminal_format import bcolors, print_error_message
+
+parsing_errored = False
+parsing_errors = []
 
 # OPERATIONS : dictionary
 operations = {
@@ -65,16 +69,26 @@ def p_type(p):
 
 # EXPRESSION : arithmetic operators
 def p_statement_int_op(p):
-    """ statement : statement ADD_OP statement
-        | statement MUL_OP statement
-        | statement AND statement
-        | statement OR statement """
-    p[0] = AST.OpNode(p[2], [AST.TokenNode(p[1]), AST.TokenNode(p[3])])
+    """ expression : expression ADD_OP expression
+        | expression MUL_OP expression
+        | expression AND expression
+        | expression OR expression """
+    p[0] = AST.OpNode(p[2], [p[1], p[3]])
 
 
 def p_minus(p):
-    """ statement : ADD_OP statement %prec UMINUS """
+    """ expression : ADD_OP expression %prec UMINUS """
     p[0] = AST.OpNode(p[1], [p[2]])
+
+
+def p_expression(p):
+    """ statement : expression """
+    p[0] = p[1]
+
+
+def p_expression_paren(p):
+    """ expression : '(' expression ')' """
+    p[0] = p[2]
 
 
 def p_assignation(p):
@@ -106,7 +120,7 @@ def p_statement_list(p):
 
 # STATEMENT : variable type : INT
 def p_statement_int(p):
-    """ statement : INTEGER_VALUE
+    """ expression : INTEGER_VALUE
         | REAL_VALUE
         | CHAR_VALUE
         | IDENTIFIER """
@@ -114,7 +128,7 @@ def p_statement_int(p):
 
 
 def p_write(p):
-    """ statement : WRITE '(' statement ')' """
+    """ statement : WRITE '(' expression ')' """
     p[0] = AST.PrintNode(p[3])
 
 
@@ -130,9 +144,12 @@ def p_boolean_expression(p):
 
 # ERROR check
 def p_error(p):
-    print("Syntax error in line %d" % p.lineno)
+    global parsing_errored, parsing_errors
+    parsing_errored = True
+    parsing_errors.append("Syntax error in line %d" % p.lineno)
+    print_error_message("Syntax error in line %d" % p.lineno)
     parser.errok()
-    raise Exception("Error while parsing")
+    # raise Exception("Error while parsing"
 
 
 # LEXEMES : priority rules
@@ -147,13 +164,33 @@ precedence = (
 parser = yacc.yacc(outputdir='generated')
 
 
+def print_banner():
+    print("""\
+
+ /$$$$$$$
+| $$__  $$
+| $$  \ $$ /$$$$$$   /$$$$$$   /$$$$$$$  /$$$$$$   /$$$$$$
+| $$$$$$$/|____  $$ /$$__  $$ /$$_____/ /$$__  $$ /$$__  $$
+| $$____/  /$$$$$$$| $$  \__/|  $$$$$$ | $$$$$$$$| $$  \__/
+| $$      /$$__  $$| $$       \____  $$| $$_____/| $$
+| $$     |  $$$$$$$| $$       /$$$$$$$/|  $$$$$$$| $$
+|__/      \_______/|__/      |_______/  \_______/|__/
+
+
+                                                           """)
+
+
 def parse(program):
     return yacc.parse(program)
 
 if __name__ == "__main__":
+    print_banner()
     import sys
     prog = open(sys.argv[1]).read()
     result = yacc.parse(prog, debug=1)
+    if parsing_errored:
+        [print_error_message(e) for e in parsing_errors]
+        exit()
     if result:
         print(result)
 
@@ -163,4 +200,4 @@ if __name__ == "__main__":
         graph.write_pdf(name)
         print("wrote ast to", name)
     else:
-        print("Parsing returned no result!")
+        print_error_message("Parsing returned no result!")

@@ -1,19 +1,22 @@
-Program Hello_World;
-VAR
+program Hello_World;
+var
   toto : integer;
   tata : integer;
   titi : real;
   tutu : char;
-Begin
+  tete : integer;
+begin
+  tete := 12 * (3 + 1);
+  write(13 + 4 * 3);
   toto := -12;
   tata := 4;
-  Write(12.4 + 2.2);
-  Write('h');
-  Write(tata);
+  write(12.4 + 2.2);
+  write('h');
+  write(tata);
   tutu := 's';
-  Write(tutu);
+  write(tutu);
   tata := toto + 28;
-  Write(tata);
+  write(tata);
   toto := toto + tata;
-  Write(toto);
-End.
+  write(toto);
+end.

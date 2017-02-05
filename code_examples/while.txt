@@ -21,4 +21,10 @@ begin
   write(tata);
   toto := toto + tata;
   write(toto);
+  while toto <> 0 do
+  begin
+    write(tutu);
+    toto := toto - 1;
+  end;
+  write(toto);
 end.

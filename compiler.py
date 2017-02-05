@@ -2,11 +2,12 @@ import AST
 from AST import add_to_class
 from functools import reduce
 import re
+from terminal_format import bcolors, print_error_message
 
 operations = {
     '+': "ADD\n",
     '-': "SUB\n",
-    '∗': "MUL\n",
+    '*': "MUL\n",
     '/': "DIV\n",
 }
 
@@ -65,7 +66,10 @@ def compile(self):
     var_name = str(self.children[0]).rstrip('\n').replace("'", "")  # key
 
     if var_name in variables:
-        print('Variable', var_name, 'already declared')
+        print_error_message("Variable '{}' already declared".format(
+            var_name
+            )
+        )
         exit()
 
     variables[var_name] = None
@@ -98,7 +102,10 @@ def compile(self):
         elif char_pattern.match(self.tok):
             return "PUSHC %s\n" % str(self.tok).rstrip('\n')
         else:
-            print('Variable', self.tok, 'has not been declared.')
+            print_error_message("Variable '{}' has not been declared.".format(
+                self.tok
+                )
+            )
             exit()
     else:
         if id_pattern.match(str(self.tok).replace("'", "")):
@@ -125,6 +132,12 @@ def compile(self):
 def compile(self):
     bytecode = ""
     bytecode += "%s" % self.children[1].compile()
+    if self.children[0].tok not in variables:
+        print_error_message("Variable '{}' has not been declared.".format(
+            self.children[0].tok
+            )
+        )
+        exit()
     bytecode += "SET %s\n" % self.children[0].tok
     return bytecode
 
@@ -160,10 +173,28 @@ def compile(self):
     bytecode += self.children[0].compile(counter)
     return bytecode
 
+
+def print_banner():
+    print("""\
+
+  /$$$$$$                                    /$$ /$$
+ /$$__  $$                                  |__/| $$
+| $$  \__/  /$$$$$$  /$$$$$$/$$$$   /$$$$$$  /$$| $$  /$$$$$$   /$$$$$$
+| $$       /$$__  $$| $$_  $$_  $$ /$$__  $$| $$| $$ /$$__  $$ /$$__  $$
+| $$      | $$  \ $$| $$ \ $$ \ $$| $$  \ $$| $$| $$| $$$$$$$$| $$  \__/
+| $$    $$| $$  | $$| $$ | $$ | $$| $$  | $$| $$| $$| $$_____/| $$
+|  $$$$$$/|  $$$$$$/| $$ | $$ | $$| $$$$$$$/| $$| $$|  $$$$$$$| $$
+ \______/  \______/ |__/ |__/ |__/| $$____/ |__/|__/ \_______/|__/
+                                  | $$
+                                  | $$
+                                  |__/
+""")
+
 if __name__ == "__main__":
     from parser import parse
     import sys
     import os
+    print_banner()
     prog = open(sys.argv[1]).read()
     try:
         ast = parse(prog)

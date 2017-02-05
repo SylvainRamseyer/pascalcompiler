@@ -1,5 +1,6 @@
 import sys
 import re
+from terminal_format import bcolors, print_error_message
 
 """ SVM - Simple Virtual Machine (or Stupid Virtual Machine)
 Very simplistic virtual machine aimed to illustrate some compilers' concepts.
@@ -106,7 +107,8 @@ def execute(code, adresses):
                     ip += 1
                     continue
                 except ValueError:
-                    exit("Unsupported value type")
+                    print_error_message("Unsupported value type")
+                    exit()
 
         elif mnemo == "PUSHV":
             sappend(vars[code[ip][1]])
@@ -163,11 +165,25 @@ def execute(code, adresses):
 
         # Fallback
         else:
-            print("Uknown opcode %r. Stopping here." % mnemo)
+            print_error_message("Uknown opcode %r. Stopping here." % mnemo)
             break
 
         ip += 1
 
 if __name__ == '__main__':
+    print("""\
+
+  /$$$$$$  /$$    /$$ /$$      /$$
+ /$$__  $$| $$   | $$| $$$    /$$$
+| $$  \__/| $$   | $$| $$$$  /$$$$
+|  $$$$$$ |  $$ / $$/| $$ $$/$$ $$
+ \____  $$ \  $$ $$/ | $$  $$$| $$
+ /$$  \ $$  \  $$$/  | $$\  $ | $$
+|  $$$$$$/   \  $/   | $$ \/  | $$
+ \______/     \_/    |__/     |__/
+
+
+                                  """)
+
     code, adresses = parse(sys.argv[1])
     execute(code, adresses)
