@@ -191,7 +191,7 @@ def print_banner():
 """)
 
 if __name__ == "__main__":
-    from parser import parse
+    from pascal_parser import parse
     import sys
     import os
     print_banner()
