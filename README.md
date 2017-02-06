@@ -34,7 +34,7 @@ If you're interested in this compiler's specification, have a look at the
       location as the source file.
 * Compiler: `python compiler.py path_to/my_file/to_compile`
     * Generates a _.vm_ file at the same location as the source file.
-      This file can be executed by the SVm (Simple Virtual Machine aka
+      This file can be executed by the SVM (Simple Virtual Machine aka
       Stupid Virtual Machine).
 * Run: `python svm.py path_to/vm_my_file/to_run`
     * Runs the file through the virtual machine.
