@@ -1,0 +1,14 @@
+program Hello_World;
+var
+  counter : integer;
+  message : char;
+begin
+  message := 'h' + 'e' + 'l' + 'l' + 'o';
+  counter := 0;
+  while (counter <> 12) do
+  begin
+    write(message);
+    write(counter);
+    counter := counter + 1;
+  end;
+end.

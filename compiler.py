@@ -63,7 +63,7 @@ def compile(self):
 @add_to_class(AST.VarDeclarationNode)
 def compile(self):
     bytecode = ""
-    var_name = str(self.children[0]).rstrip('\n').replace("'", "")  # key
+    var_name = self.children[0].tok  # key
 
     if var_name in variables:
         print_error_message("Variable '{}' already declared".format(
@@ -71,7 +71,6 @@ def compile(self):
             )
         )
         exit()
-
     variables[var_name] = None
     bytecode += "PUSHC None\n"
     bytecode += "SET %s\n" % self.children[0].tok
@@ -100,8 +99,9 @@ def compile(self):
         if self.tok in variables:
             return "PUSHV %s\n" % self.tok
         elif char_pattern.match(self.tok):
-            return "PUSHC %s\n" % str(self.tok).rstrip('\n')
+            return "PUSHC %s\n" % self.tok
         else:
+            print(self.tok)
             print_error_message("Variable '{}' has not been declared.".format(
                 self.tok
                 )
@@ -109,6 +109,7 @@ def compile(self):
             exit()
     else:
         if id_pattern.match(str(self.tok).replace("'", "")):
+            print("Truc chelou")
             return "PUSHV %s\n" % str(self.tok).rstrip('\n').replace("'", "")
         return "PUSHC %s\n" % str(self.tok).rstrip('\n').replace("'", "")
 
@@ -157,7 +158,7 @@ def compile(self, counter):
         bytecode += child.compile()
 
     if self.op == '<>':
-        bytecode += "ADD\n"
+        bytecode += "SUB\n"
         bytecode += "JINZ body%s\n" % counter
     return bytecode
 

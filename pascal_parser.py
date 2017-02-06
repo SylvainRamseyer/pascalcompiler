@@ -40,18 +40,18 @@ def p_block(p):
 
 
 def p_var_decl_block(p):
-    """ var_declaration_block : VAR var_decl_list
-    | """
+    """ var_declaration_block : VAR var_decl_list """
     p[0] = AST.VarDeclBlockNode(p[2])
 
 
 def p_var_decl_list(p):
-    """ var_decl_list : var_declaration ';' var_decl_list
-    | var_declaration ';' """
-    if len(p) > 3:
-        p[0] = AST.VarDeclListNode([p[1]]+p[3].children)
-    else:
-        p[0] = AST.VarDeclarationNode(p[1])
+    """ var_decl_list : var_declaration ';' var_decl_list """
+    p[0] = AST.VarDeclListNode([p[1]]+p[3].children)
+
+
+def p_var_del_list_rec(p):
+    """ var_decl_list : var_declaration ';' """
+    p[0] = AST.VarDeclListNode([p[1]])
 
 
 def p_var_declaration(p):
@@ -138,8 +138,13 @@ def p_while(p):
 
 
 def p_boolean_expression(p):
-    """ boolean_expression : statement '<' '>' statement """
+    """ boolean_expression : expression '<' '>' expression """
     p[0] = AST.BoolExpressionNode(p[2] + p[3], [p[1], p[4]])
+
+
+def p_boolean_expression_paren(p):
+    """ boolean_expression : '(' expression '<' '>' expression ')' """
+    p[0] = AST.BoolExpressionNode(p[3] + p[4], [p[2], p[5]])
 
 
 # ERROR check
